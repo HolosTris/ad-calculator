@@ -1,0 +1,110 @@
+/* Button */
+button,
+.btn {
+  background-color: #1a1a1a;
+  border: 2px solid #7c787d;
+  border-radius: 8px;
+  padding: 6px;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover {
+  border-color: #fff;
+}
+
+/* More Button */
+.more-btn {
+  position: relative;
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 2px 0;
+}
+.more-btn .btn-line {
+  width: 50%;
+  margin-left: auto;
+  height: 4px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  border: none;
+  background-color: #d9d9d9;
+}
+.more-btn.full .btn-line {
+  width: 100%;
+}
+
+/* Input */
+input {
+  height: 26px;
+  width: 100%;
+  background: none;
+  border: 2px solid #7c787d;
+  border-radius: 26px;
+  color: #fff;
+  font-size: 17px;
+  text-align: center;
+}
+input:focus {
+  outline: none;
+  border-color: #fff;
+}
+input.large {
+  height: 60px;
+  border: none;
+  border-radius: 0;
+  font-size: 52px;
+}
+input.mini {
+  width: 60px;
+}
+
+/* OK and Cancel Buttons */
+.btn-no,
+.btn-yes {
+  position: relative;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.btn-yes::before,
+.btn-yes::after {
+  position: absolute;
+  content: "";
+  height: 4px;
+  width: 18px;
+  background-color: #7c787d;
+  border-radius: 4px;
+  left: 1px;
+  transform: rotate(50deg);
+}
+.btn-yes::after {
+  width: 22px;
+  left: 10px;
+  top: 14px;
+  transform: rotate(-50deg);
+}
+.btn-no::before,
+.btn-no::after {
+  position: absolute;
+  content: "";
+  height: 4px;
+  width: 28px;
+  background-color: #7c787d;
+  border-radius: 4px;
+  left: 2px;
+  top: 14px;
+  transform: rotate(45deg);
+}
+.btn-no::after {
+  transform: rotate(-45deg);
+}
+.btn-yes:hover::before,
+.btn-yes:hover::after,
+.btn-no:hover::before,
+.btn-no:hover::after {
+  background-color: #fff;
+}
