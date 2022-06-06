@@ -16,13 +16,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
 }
-body.modal-active,
-body.window-colors {
+body.modal-active {
   overflow: hidden;
 }
 
 /* Header, Footer */
-header {
+.window-main header {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -35,7 +34,7 @@ footer {
   padding: 15px 8px;
   margin-top: 30px;
 }
-header div,
+.window-main header div,
 footer div {
   display: flex;
   align-items: center;

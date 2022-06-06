@@ -8,17 +8,18 @@
     <link rel="stylesheet" href="./colors.css" />
   </head>
   <body class="window-colors">
-    <header>
-      <div id="logo-con">
-        <img id="logo" src="./svg/logo.svg" alt="logo" />
-        <h1>Рекламный калькулятор</h1>
-      </div>
+    <header class="info-header">
+      <section>
+        <div id="logo-con">
+          <img id="logo" src="./svg/logo.svg" alt="logo" />
+          <h1>Рекламный калькулятор</h1>
+        </div>
 
-      <div id="title">
-        <h2>Палитра пленок</h2>
-      </div>
-    </header>
-    <main>
+        <div id="title">
+          <h2>Палитра пленок</h2>
+        </div>
+      </section>
+
       <section class="info">
         <p>
           ORACAL - 641 мягкая ПВХ-пленка, толщиной 0,075 мм, 59 глянцевых и 59
@@ -32,15 +33,30 @@
           >
         </p>
 
-        <div class="light-indicator">
+        <div class="light-indicator active">
           <span>засветка</span>
           <div class="btn">
             <img width="42px" src="./svg/light_gray.svg" alt="" />
           </div>
         </div>
       </section>
-      <section class="colors-list"></section>
+    </header>
+    <main>
+      <section class="list-wrapper">
+        <div palette="palette8500" class="colors-list"></div>
+        <!-- <div class="btn">
+          0 <br />
+          прозрачный<br />
+          RGB<br />
+          RAL<br />
+          CMYK<br />
+          HEX<br />
+          PANTONE<br />
+          TIKKURILA
+        </div> -->
+      </section>
     </main>
     <script src="./script.js"></script>
+    <script src="./utils.js"></script>
   </body>
 </html>
