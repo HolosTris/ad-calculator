@@ -1,3 +1,9 @@
+.window-colors header {
+  position: sticky;
+  top: 0;
+  background-color: #000;
+  z-index: 1;
+}
 .window-colors header section {
   display: flex;
   justify-content: space-between;
@@ -13,12 +19,7 @@ header section:first-child div {
 
 .window-colors main {
   padding: 0 4px;
-}
-
-.info-header {
-  position: sticky;
-  top: 0;
-  background-color: #000;
+  position: relative;
 }
 
 .info {
@@ -30,40 +31,55 @@ header section:first-child div {
 }
 
 .light-indicator {
+  display: none;
   color: #7c787d;
   line-height: 1.5;
   margin-left: 8px;
   margin-top: -4px;
 }
+body.used-light .light-indicator {
+  display: block;
+}
 .light-indicator .btn {
   background-color: #000;
   padding-bottom: 0;
 }
-.light-indicator.active .btn {
+body.light-on .light-indicator .btn {
   background-color: #fff;
 }
-
-/* .list-wrapper {
-  height: 100vh;
-} */
 
 .colors-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  /* width: auto;
+  margin: 0 auto; */
+}
+body.light-on .colors-list {
+  /* padding: 1px 0 0 1px; */
 }
 
 .colors-list .btn {
   width: 72px;
   height: 72px;
-  border: none;
   font-size: 7px;
   text-align: center;
   padding: 2px;
   white-space: nowrap;
+}
+body.light-on .colors-list .btn {
+  border: none;
+  /* width: 74px;
+  height: 74px;
+  margin: -2px 0 0 -2px; */
 }
 .colors-list .btn:hover {
   color: transparent;
 }
 .black-text {
   color: #000;
+}
+
+.colors-list .filler {
+  width: 72px;
 }

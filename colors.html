@@ -2,10 +2,10 @@
 <html>
   <head>
     <title>Рекламный калькулятор</title>
-    <link rel="stylesheet" href="./fonts.css" />
-    <link rel="stylesheet" href="./ui.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./colors.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/ui.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/colors.css" />
   </head>
   <body class="window-colors">
     <header class="info-header">
@@ -33,7 +33,7 @@
           >
         </p>
 
-        <div class="light-indicator active">
+        <div class="light-indicator">
           <span>засветка</span>
           <div class="btn">
             <img width="42px" src="./svg/light_gray.svg" alt="" />
@@ -42,8 +42,7 @@
       </section>
     </header>
     <main>
-      <section class="list-wrapper">
-        <div palette="palette8500" class="colors-list"></div>
+      <section palette="palette8500" class="colors-list">
         <!-- <div class="btn">
           0 <br />
           прозрачный<br />
@@ -56,7 +55,7 @@
         </div> -->
       </section>
     </main>
-    <script src="./script.js"></script>
-    <script src="./utils.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/utils.js"></script>
   </body>
 </html>
