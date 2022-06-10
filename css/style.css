@@ -142,16 +142,27 @@ label {
   color: #7c787d;
   margin-top: 5px;
 }
-.prop button {
+.prop button,
+.prop input[type="button"] {
   width: 72px;
   height: 72px;
-}
-/* .prop button.not-active {
+  text-align: center;
   background-color: #1a1a1a;
-} */
-.prop button img {
-  width: 42px;
+}
+.prop button img,
+.prop button .light-img {
+  width: 100%;
   height: 42px;
+  background-color: #7c787d;
+  -webkit-mask-image: url(../svg/light_white.svg);
+  mask-image: url(../svg/light_white.svg);
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+.prop button.active .light-img {
+  background-color: #fff;
 }
 .prop-color {
   color: #fff;

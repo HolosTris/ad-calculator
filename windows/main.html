@@ -103,19 +103,25 @@
     </div>
     <div class="param-con">
       <label for="textHeight">высота шрифта, см</label>
-      <input type="text" name="textHeight" id="" class="mini" />
+      <input
+        type="text"
+        name="textHeight"
+        id=""
+        class="mini inp-number"
+        multiplier="100"
+      />
     </div>
     <div class="param-con">
       <label for="signHeight">высота вывески, м</label>
-      <input type="text" name="signHeight" id="" class="mini" />
+      <input type="text" name="signHeight" id="" class="mini inp-number" />
     </div>
     <div class="param-con">
       <label for="signWidth">ширина вывески, м</label>
-      <input type="text" name="signWidth" id="" class="mini" />
+      <input type="text" name="signWidth" id="" class="mini inp-number" />
     </div>
     <div class="param-con">
       <label for="mountHeight">высота установки, м</label>
-      <input type="text" name="mountHeight" id="" class="mini" />
+      <input type="text" name="mountHeight" id="" class="mini inp-number" />
     </div>
     <div class="param-con param-distance">
       <p>
@@ -129,47 +135,63 @@
     <h2>Световые буквы</h2>
     <hr />
     <div class="render">
-      <div class="render-preview"></div>
+      <div class="render-preview">
+        <object
+          id="letter-face"
+          type="image/svg+xml"
+          data="../svg/letter/face.svg"
+        >
+          <!-- <img src="picture.png" /> -->
+        </object>
+      </div>
       <div class="render-props">
         <div class="prop prop-color">
           <span>цвет лица</span>
-          <button style="background-color: #caa900">
-            8500-021 серно-желтый
-          </button>
+          <button name="faceColor">8500-021 серно-желтый</button>
         </div>
 
         <div class="prop prop-light">
           <span>засветка</span>
-          <button>
-            <img src="./svg/light_white.svg" alt="" /><span>белая</span>
+          <button name="isFaceLight" class="active">
+            <div class="light-img"></div>
+            <span>белая</span>
           </button>
         </div>
 
         <div class="prop prop-color">
           <span>цвет боковины</span>
-          <button style="background-color: #f2e010">
-            8500-021 серно-желтый
-          </button>
+          <button name="sideColor">8500-021 серно-желтый</button>
         </div>
 
         <div class="prop prop-light">
           <span>засветка</span>
-          <button class="not-active">
-            <img src="./svg/light_gray.svg" alt="" /><span>белая</span>
+          <button name="isSideLight">
+            <!-- <img
+              style="mask-image: image(url(./svg/light_gray.svg), white)"
+              src="./svg/light_gray.svg"
+              alt=""
+            /> -->
+            <div class="light-img"></div>
+            <span>белая</span>
           </button>
         </div>
 
         <div class="prop prop-light prop-extended">
           <span>ажурная засветка</span>
-          <button style="background-color: #0f0">
-            <img src="./svg/light_white.svg" alt="" /><span>зелёная</span>
+          <button
+            name="backLight"
+            class="active"
+            style="background-color: #0f0"
+          >
+            <div class="light-img"></div>
+            <span>зелёная</span>
           </button>
         </div>
 
         <div class="prop prop-light prop-extended">
           <span>высокая яркость</span>
-          <button class="not-active">
-            <img src="./svg/light_gray.svg" alt="" />
+          <button name="isHighBrightness">
+            <div class="light-img"></div>
           </button>
         </div>
       </div>

@@ -6,6 +6,7 @@ a {
 
 /* Button */
 button,
+input[type="button"],
 .btn {
   background-color: #1a1a1a;
   border: 2px solid #7c787d;
@@ -14,7 +15,8 @@ button,
   color: #fff;
   cursor: pointer;
 }
-button:hover {
+button:hover,
+input[type="button"]:hover {
   border-color: #fff;
 }
 
@@ -41,7 +43,7 @@ button:hover {
 }
 
 /* Input */
-input {
+input[type="text"] {
   height: 26px;
   width: 100%;
   background: none;

@@ -5,24 +5,26 @@ const body = document.body;
 const props = {
   textSign: "",
   font: 1,
-  textHeight: 0.1,
+  textHeight: 10,
   signHeight: 1,
   signWidth: 1,
   mountHeight: 1,
-  faceColor: 25,
+  faceColor: "641-21",
+  faceLight: 1,
   isFaceLight: true,
-  sideColor: 25,
+  sideColor: "8500-25",
+  sideLight: 1,
   isSideLight: false,
-  backLight: "green",
+  backLight: 6,
+  isBackLight: true,
   isHighBrightness: false,
+  windows: {},
+  palettes: {},
 };
 
 initApp();
 
 async function initApp() {
-  props.windows = {};
-  props.palette = {};
-
   await fetchWindow("main");
   props.windows.main.script = initMain;
 
@@ -50,7 +52,7 @@ async function fetchPalette(name) {
     .then((res) => res.json())
     .catch((error) => alert(error))
     .then((palette) => {
-      props.palette[name] = palette;
+      props.palettes[name] = palette;
     });
 }
 

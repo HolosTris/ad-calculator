@@ -2,7 +2,7 @@ export default function (props) {
   const colorsList = document.getElementsByClassName("colors-list")[0];
   const lightIndicator = document.getElementsByClassName("light-indicator")[0];
 
-  const palette = props.palette[colorsList.getAttribute("palette")];
+  const palette = props.palettes[colorsList.getAttribute("palette")];
 
   lightIndicator.onclick = () => {
     document.body.classList.toggle("light-on");
@@ -42,14 +42,7 @@ export default function (props) {
       } else [r, g, b] = color.rgb ? color.rgb : [, ,];
 
       //  = color.rgb ? color.rgb : [, ,];
-      const hex = color.rgb
-        ? [r, g, b]
-            .map((x) => {
-              const hex = x.toString(16);
-              return hex.length === 1 ? "0" + hex : hex;
-            })
-            .join("")
-        : null;
+      const hex = color.rgb ? getHex([r, g, b]) : null;
 
       colorsList.insertAdjacentHTML(
         "beforeend",
@@ -77,13 +70,13 @@ export default function (props) {
     for (let i = 0; i < numCol; i++)
       colorsList.insertAdjacentHTML("beforeend", "<div class='filler'></div>");
   }
+}
 
-  function setContrastText(rgb) {
-    if (!rgb) return "#000";
+function setContrastText(rgb) {
+  if (!rgb) return "#000";
 
-    const brightness = Math.round(
-      (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
-    );
-    return brightness > 125 ? "black-text" : "";
-  }
+  const brightness = Math.round(
+    (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
+  );
+  return brightness > 125 ? "black-text" : "";
 }
