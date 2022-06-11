@@ -1,21 +1,10 @@
-// textSign: "",
-// font: 1,
-// textHeight: 0.1,
-// signHeight: 1,
-// signWidth: 1,
-// mountHeight: 1,
-// faceColor: 25,
-// isFaceLight: true,
-// sideColor: 25,
-// isSideLight: false,
-// backLight: "green",
-// isHighBrightness: false,
 import {
   getHex,
   setContrastText,
   isDualColor,
   findSimilarColor,
 } from "./utils.js";
+import { switchWindow } from "./script.js";
 
 const body = document.body;
 
@@ -113,6 +102,7 @@ function renderColorBtn(btn, colorProp, lightProp) {
 
 function initModal(props) {
   const modal = body.getElementsByClassName("modal")[0];
+  console.log(body);
 
   modal.onclick = (ev) => {
     modal == ev.target && body.classList.remove("modal-active");
@@ -130,6 +120,7 @@ function initModal(props) {
 function showActionBtns(props) {
   body.getElementsByClassName("modal-actions")[0].innerHTML = "";
 
+  const btns = [];
   let pickingColor;
 
   if (props.faceLight.isOn) {
@@ -138,15 +129,15 @@ function showActionBtns(props) {
       props.palettes.palette8500
     );
     console.log(pickingColor);
-    createActionBtn(pickingColor, "8500", true, true);
-    createActionBtn(pickingColor, "8500", true, false);
+    btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, true));
+    btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, false));
   } else {
     pickingColor = findSimilarColor(
       props.faceColor.color,
       props.palettes.palette641
     );
     console.log(pickingColor);
-    createActionBtn(pickingColor, "641", false);
+    btns.push(createActionBtn(pickingColor, "faceColor", "641", false));
   }
 
   if (props.sideLight.isOn) {
@@ -154,43 +145,64 @@ function showActionBtns(props) {
       props.sideColor.color,
       props.palettes.palette8500
     );
-    createActionBtn(pickingColor, "8500", true, true);
-    createActionBtn(pickingColor, "8500", true, false);
+    btns.push(
+      createActionBtn(
+        pickingColor,
+        "sideColor",
+        "8500",
+        "faceColor",
+        true,
+        true
+      )
+    );
+    btns.push(createActionBtn(pickingColor, "sideColor", "8500", true, false));
   } else {
     pickingColor = findSimilarColor(
       props.sideColor.color,
       props.palettes.palette641
     );
-    createActionBtn(pickingColor, "641", false);
+    console.log(pickingColor);
+    btns.push(createActionBtn(pickingColor, "sideColor", "641", false));
   }
+
+  document.getElementsByClassName("modal-actions")[0].append(...btns);
 }
 
-function createActionBtn(color, palId, withIcon, withLight = false) {
-  body.getElementsByClassName("modal-actions")[0].insertAdjacentHTML(
-    "beforeend",
-    `<button class="pick-color ${
-      withLight ? "with-ligth" : ""
-    }" style="background-color: #${
-      withIcon ? getHex(color.rgb[+withLight]) : getHex(color.rgb)
-    }">
-      <div class="name">
-        ${palId + "-" + color.id}
-        <br />
-        ${color.name}
-      </div>
-      ${
-        withIcon
-          ? `<div class="btn"><img src="${
-              withLight ? "./svg/light_white.svg" : "./svg/light_gray.svg"
-            }" alt="" /></div>`
-          : ""
-      }
-      <div class="tip">
-        цвет лица буквы
-        ${
-          withIcon ? "<br/>" + (withLight ? "с засветкой" : "без засветки") : ""
-        }
-      </div>
-    </button>`
-  );
+function createActionBtn(
+  color,
+  choosingProp,
+  palId,
+  withIcon,
+  withLight = false
+) {
+  const btn = document.createElement("button");
+
+  btn.className = `pick-color ${withLight ? "with-ligth" : ""}`;
+  btn.style.backgroundColor =
+    "#" + (withIcon ? getHex(color.rgb[+withLight]) : getHex(color.rgb));
+
+  btn.innerHTML = `
+    <div class="name">
+      ${palId + "-" + color.id}
+      <br />
+      ${color.name}
+    </div>
+    ${
+      withIcon
+        ? `<div class="btn"><img src="${
+            withLight ? "./svg/light_white.svg" : "./svg/light_gray.svg"
+          }" alt="" /></div>`
+        : ""
+    }
+    <div class="tip">
+      цвет лица буквы
+      ${withIcon ? "<br/>" + (withLight ? "с засветкой" : "без засветки") : ""}
+    </div>`;
+
+  btn.onclick = (ev) => {
+    ev.stopPropagation();
+    switchWindow("picker", [choosingProp, palId, withLight]);
+  };
+
+  return btn;
 }

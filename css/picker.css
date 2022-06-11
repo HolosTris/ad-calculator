@@ -1,10 +1,10 @@
-.window-colors header {
+.window-picker header {
   position: sticky;
   top: 0;
   background-color: #000;
   z-index: 1;
 }
-.window-colors header section {
+.window-picker header section {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -17,7 +17,7 @@ header section:first-child div {
   align-items: center;
 }
 
-.window-colors main {
+.window-picker main {
   padding: 0 4px;
   position: relative;
 }

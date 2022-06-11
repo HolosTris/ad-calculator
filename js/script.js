@@ -11,7 +11,7 @@ const props = {
   mountHeight: 1,
   faceColor: { id: "641-34", color: null, palette: null },
   faceLight: { color: 1, isOn: false },
-  sideColor: { id: "8500-8", color: null, palette: null },
+  sideColor: { id: "8500-528", color: null, palette: null },
   sideLight: { color: 1, isOn: false },
   backLight: { color: 6, isOn: true },
   isHighBrightness: false,
@@ -55,15 +55,17 @@ async function fetchPalette(name) {
     });
 }
 
-function switchWindow(name) {
+export function switchWindow(name, params = []) {
   body.classList = [];
   body.innerHTML = "";
 
   body.classList.add("window-" + name);
 
-  body.append(props.windows[name].body);
+  const window = props.windows[name].body.cloneNode(true);
 
-  if (props.windows[name].script) props.windows[name].script(props);
+  body.append(window);
+
+  if (props.windows[name].script) props.windows[name].script(props, ...params);
 }
 
 function initColors(colors = []) {

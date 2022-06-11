@@ -1,13 +1,25 @@
-import { isDualColor } from "./utils.js";
+import { switchWindow } from "./script.js";
+import { isDualColor, getHex, setContrastText } from "./utils.js";
 
-export default function (props) {
+export default function (
+  props,
+  choosingProp = "faceColor",
+  palId = "641",
+  isLightOn = false
+) {
+  const body = document.body;
+  body.setAttribute("choosing", choosingProp);
+
   const colorsList = document.getElementsByClassName("colors-list")[0];
-  const lightIndicator = document.getElementsByClassName("light-indicator")[0];
+  colorsList.setAttribute("palette", "palette" + palId);
 
-  const palette = props.palettes[colorsList.getAttribute("palette")];
+  const lightIndicator = document.getElementsByClassName("light-indicator")[0];
+  isLightOn && lightIndicator.classList.add("light-on");
+
+  const palette = props.palettes["palette" + palId];
 
   lightIndicator.onclick = () => {
-    document.body.classList.toggle("light-on");
+    body.classList.toggle("light-on");
     fillList(palette.colors);
   };
   fillInfo(palette);
@@ -22,36 +34,37 @@ export default function (props) {
   function fillList(palette) {
     colorsList.innerHTML = "";
 
+    const btns = [];
+
     for (let color of palette) {
-      let r, g, b;
+      let rgb;
 
       if (color.rgb && isDualColor(color)) {
-        document.body.classList.add("used-light");
-        [r, g, b] = document.body.classList.contains("light-on")
-          ? color.rgb[1]
-          : color.rgb[0];
-      } else [r, g, b] = color.rgb ? color.rgb : [, ,];
+        body.classList.add("used-light");
+        rgb = body.classList.contains("light-on") ? color.rgb[1] : color.rgb[0];
+      } else rgb = color.rgb ? color.rgb : [, ,];
 
-      //  = color.rgb ? color.rgb : [, ,];
-      const hex = color.rgb ? getHex([r, g, b]) : null;
+      btns.push(createBtn(color, rgb, choosingProp));
 
-      colorsList.insertAdjacentHTML(
-        "beforeend",
-        `
-    <div class="btn ${
-      color.rgb ? setContrastText([r, g, b]) : "black-text"
-    }" style="background-color: #${hex ? hex : "fff"}">
-    <b>${color.id}<br />
-    ${color.name}</b><br />
-    ${color.rgb ? "RGB " + [r, g, b].join("-") : ""}<br />
-    ${color.ral ? "RAL " + color.ral : ""}<br />
-    ${color.cmyk ? "CMYK " + color.cmyk.join("-") : ""}<br />
-    ${hex ? "HEX " + hex.toUpperCase() : ""}<br />
-    ${color.pantone ? "PANTONE " + color.pantone : ""}<br />
-    ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}
-    </div>`
-      );
+      //   colorsList.insertAdjacentHTML(
+      //     "beforeend",
+      //     `
+      // <div class="btn ${
+      //   color.rgb ? setContrastText(rgb) : "black-text"
+      // }" style="background-color: #${hex ? hex : "fff"}">
+      // <b>${color.id}<br />
+      // ${color.name}</b><br />
+      // ${color.rgb ? "RGB " + rgb.join("-") : ""}<br />
+      // ${color.ral ? "RAL " + color.ral : ""}<br />
+      // ${color.cmyk ? "CMYK " + color.cmyk.join("-") : ""}<br />
+      // ${hex ? "HEX " + hex.toUpperCase() : ""}<br />
+      // ${color.pantone ? "PANTONE " + color.pantone : ""}<br />
+      // ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}
+      // </div>`
+      //   );
     }
+
+    colorsList.append(...btns);
 
     const numCol = Math.floor(
       Number.parseFloat(getComputedStyle(colorsList).width) /
@@ -61,13 +74,34 @@ export default function (props) {
     for (let i = 0; i < numCol; i++)
       colorsList.insertAdjacentHTML("beforeend", "<div class='filler'></div>");
   }
-}
 
-function setContrastText(rgb) {
-  if (!rgb) return "#000";
+  function createBtn(color, rgb) {
+    const hex = color.rgb ? getHex(rgb) : null;
 
-  const brightness = Math.round(
-    (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
-  );
-  return brightness > 125 ? "black-text" : "";
+    const btn = document.createElement("div");
+
+    btn.className = `btn ${color.rgb ? setContrastText(rgb) : "black-text"}`;
+    btn.style.backgroundColor = "#" + (hex ? hex : "fff");
+
+    btn.innerHTML = `
+      <b>${color.id}<br />
+      ${color.name}</b><br />
+      ${color.rgb ? "RGB " + rgb.join("-") : ""}<br />
+      ${color.ral ? "RAL " + color.ral : ""}<br />
+      ${color.cmyk ? "CMYK " + color.cmyk.join("-") : ""}<br />
+      ${hex ? "HEX " + hex.toUpperCase() : ""}<br />
+      ${color.pantone ? "PANTONE " + color.pantone : ""}<br />
+      ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}`;
+
+    btn.onclick = (ev) => {
+      props[choosingProp].id = palId + "-" + color.id;
+      props[choosingProp].palette = palette;
+      props[choosingProp].color = color;
+
+      ev.stopPropagation();
+      switchWindow("main");
+    };
+
+    return btn;
+  }
 }
