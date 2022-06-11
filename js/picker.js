@@ -1,3 +1,5 @@
+import { isDualColor } from "./utils.js";
+
 export default function (props) {
   const colorsList = document.getElementsByClassName("colors-list")[0];
   const lightIndicator = document.getElementsByClassName("light-indicator")[0];
@@ -11,17 +13,6 @@ export default function (props) {
   fillInfo(palette);
   fillList(palette.colors);
 
-  // getPalette(colorsList.getAttribute("palette"));
-
-  // async function getPalette(name) {
-  //   return await fetch("./json/" + name + ".json")
-  //     .then((res) => res.json())
-  //     .catch((error) => alert(error))
-  //     .then((pal) => {
-  //       palette = pal;
-  //     });
-  // }
-
   function fillInfo(palette) {
     document.querySelector(".info p").innerHTML =
       palette.description + "<br/><a>Читать ещё</a>";
@@ -34,7 +25,7 @@ export default function (props) {
     for (let color of palette) {
       let r, g, b;
 
-      if (color.rgb && Array.isArray(color.rgb[0])) {
+      if (color.rgb && isDualColor(color)) {
         document.body.classList.add("used-light");
         [r, g, b] = document.body.classList.contains("light-on")
           ? color.rgb[1]

@@ -1,4 +1,4 @@
-import initColors from "./colors.js";
+import initPicker from "./picker.js";
 import initMain from "./main.js";
 
 const body = document.body;
@@ -9,14 +9,11 @@ const props = {
   signHeight: 1,
   signWidth: 1,
   mountHeight: 1,
-  faceColor: "641-21",
-  faceLight: 1,
-  isFaceLight: true,
-  sideColor: "8500-25",
-  sideLight: 1,
-  isSideLight: false,
-  backLight: 6,
-  isBackLight: true,
+  faceColor: { id: "641-34", color: null, palette: null },
+  faceLight: { color: 1, isOn: false },
+  sideColor: { id: "8500-8", color: null, palette: null },
+  sideLight: { color: 1, isOn: false },
+  backLight: { color: 6, isOn: true },
   isHighBrightness: false,
   windows: {},
   palettes: {},
@@ -25,14 +22,16 @@ const props = {
 initApp();
 
 async function initApp() {
+  await fetchPalette("palette641");
+  await fetchPalette("palette8500");
+
+  initColors([props.faceColor, props.sideColor]);
+
   await fetchWindow("main");
   props.windows.main.script = initMain;
 
-  await fetchWindow("colors");
-  props.windows.colors.script = initColors;
-
-  await fetchPalette("palette641");
-  await fetchPalette("palette8500");
+  await fetchWindow("picker");
+  props.windows.picker.script = initPicker;
 
   switchWindow("main");
 }
@@ -65,7 +64,16 @@ function switchWindow(name) {
   body.append(props.windows[name].body);
 
   if (props.windows[name].script) props.windows[name].script(props);
-  // Colors();
+}
+
+function initColors(colors = []) {
+  colors.forEach((col) => {
+    const palId = col.id.slice(0, col.id.indexOf("-"));
+    col.palette = props.palettes["palette" + palId];
+    col.color = col.palette.colors.find((color) =>
+      palId + "-" + color.id == col.id ? 1 : 0
+    );
+  });
 }
 
 // function capitalize(str) {

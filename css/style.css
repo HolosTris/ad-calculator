@@ -19,6 +19,7 @@ body {
 }
 body.modal-active {
   overflow: hidden;
+  margin-right: 14px;
 }
 
 /* Header, Footer */
