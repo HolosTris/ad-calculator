@@ -5,6 +5,7 @@ import {
   findSimilarColor,
 } from "./utils.js";
 import { switchWindow } from "./script.js";
+import initPreview, { changeLetterColor } from "./preview.js";
 
 const body = document.body;
 
@@ -12,6 +13,7 @@ export default function (props) {
   initInputs(props);
   initPropButtons(props);
   initModal(props);
+  initPreview(props);
 }
 
 function initInputs(props) {
@@ -69,6 +71,12 @@ function initPropButtons(props) {
 
         colorBtn &&
           renderColorBtn(colorBtn, props[colorProp], props[prop].isOn);
+
+        changeLetterColor(
+          prop.replace("Light", ""),
+          props[colorProp].color,
+          props[prop].isOn
+        );
       };
 
       btn.ondblclick = () => {};
@@ -93,7 +101,7 @@ function initPropButtons(props) {
 
 function renderColorBtn(btn, colorProp, lightProp) {
   const color = colorProp.color;
-  const rgb = isDualColor(colorProp.color) ? color.rgb[+lightProp] : color.rgb;
+  const rgb = isDualColor(color) ? color.rgb[+lightProp] : color.rgb;
 
   btn.innerText = `${colorProp.id}\n ${color.name}`;
   btn.style.backgroundColor = "#" + getHex(rgb);

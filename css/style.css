@@ -104,7 +104,9 @@ main {
   font-size: 12px;
   margin-top: 10px 0;
 }
-.param-distance p span {
+
+.highlight-text {
+  font-weight: 700;
   color: #fff;
 }
 
@@ -126,6 +128,17 @@ label {
 .render {
   display: flex;
 }
+
+.render-preview {
+  position: relative;
+}
+.render-preview object {
+  position: absolute;
+  z-index: -1;
+  top: -10px;
+  left: -20px;
+}
+
 .render-props {
   display: flex;
   flex-wrap: wrap;
