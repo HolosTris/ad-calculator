@@ -5,7 +5,7 @@ import {
   findSimilarColor,
 } from "./utils.js";
 import { switchWindow } from "./script.js";
-import initPreview, { changeLetterColor } from "./preview.js";
+import initPreview, { changeLetterColor, toggleLight } from "./preview.js";
 
 const body = document.body;
 
@@ -54,10 +54,20 @@ function initPropButtons(props) {
     }
 
     if (btn.parentElement.classList.contains("prop-light")) {
+      const lightColor = props[prop].color;
       const render = () => {
         props[prop].isOn
           ? btn.classList.add("active")
           : btn.classList.remove("active");
+
+        btn.lastElementChild.innerText = lightColor.name;
+
+        const rgb = lightColor.rgb;
+
+        if (!rgb || lightColor.id < 4) return;
+
+        btn.style.backgroundColor = "#" + getHex(rgb);
+        btn.classList.add(setContrastText(rgb));
       };
       render();
 
@@ -69,14 +79,16 @@ function initPropButtons(props) {
         const colorProp = prop.replace("Light", "Color");
         const colorBtn = buttons.namedItem(colorProp);
 
-        colorBtn &&
+        if (colorBtn) {
           renderColorBtn(colorBtn, props[colorProp], props[prop].isOn);
 
-        changeLetterColor(
-          prop.replace("Light", ""),
-          props[colorProp].color,
-          props[prop].isOn
-        );
+          changeLetterColor(
+            prop.replace("Light", ""),
+            props[colorProp].color,
+            props[prop].isOn
+          );
+        }
+        toggleLight(prop, lightColor, props[prop].isOn);
       };
 
       btn.ondblclick = () => {};

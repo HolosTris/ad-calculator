@@ -1,10 +1,14 @@
 export function setContrastText(rgb) {
   if (!rgb) return "white-text";
 
+  return isBright(rgb) ? "black-text" : "white-text";
+}
+
+export function isBright(rgb) {
   const brightness = Math.round(
     (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
   );
-  return brightness > 125 ? "black-text" : "white-text";
+  return brightness > 125;
 }
 
 export function getHex(rgb) {
@@ -50,6 +54,15 @@ export function findSimilarColor(color, palette) {
   ).color;
 
   return similarColor;
+}
+
+export function toCamelCase(text = "", separator = "_") {
+  while (text.includes(separator)) {
+    const firstLetter = text[text.indexOf(separator) + 1];
+    text = text.replace(separator + firstLetter, firstLetter.toUpperCase());
+  }
+
+  return text;
 }
 
 export const lerp = (x, y, a) => x * (1 - a) + y * a;

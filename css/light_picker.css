@@ -1,0 +1,43 @@
+.color-con {
+  display: flex;
+}
+
+.info-color {
+  position: relative;
+  width: 100%;
+}
+
+.info-color .intersections-img {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  -webkit-mask-image: url(../svg/intersections.svg);
+  mask-image: url(../svg/intersections.svg);
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 35px;
+  -webkit-mask-size: 35px;
+  top: 0;
+  left: 25px;
+}
+
+.pick-indicator {
+  height: 39px;
+  width: 39px;
+  padding: 2px;
+  background-color: #000;
+  margin-left: 4px;
+}
+.pick-indicator.active {
+  background-color: #fff;
+}
+
+.pick-indicator .light-img {
+  height: 32px;
+  width: 32px;
+  mask-size: 32px;
+  -webkit-mask-size: 32px;
+}

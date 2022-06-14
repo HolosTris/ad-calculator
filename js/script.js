@@ -1,5 +1,7 @@
 import initPicker from "./picker.js";
 import initMain from "./main.js";
+import initLightPicker from "./light_picker.js";
+import { toCamelCase } from "./utils.js";
 
 const body = document.body;
 const props = {
@@ -10,10 +12,10 @@ const props = {
   signWidth: 1,
   mountHeight: 1,
   faceColor: { id: "641-34", color: null, palette: null },
-  faceLight: { color: 1, isOn: false },
+  faceLight: { color: 5, isOn: false },
   sideColor: { id: "8500-528", color: null, palette: null },
-  sideLight: { color: 1, isOn: false },
-  backLight: { color: 6, isOn: true },
+  sideLight: { color: 4, isOn: false },
+  backLight: { color: 7, isOn: true },
   isHighBrightness: false,
   windows: {},
   palettes: {},
@@ -24,8 +26,15 @@ initApp();
 async function initApp() {
   await fetchPalette("palette641");
   await fetchPalette("palette8500");
+  await fetchPalette("light_colors");
 
-  initColors([props.faceColor, props.sideColor]);
+  initColors([
+    props.faceColor,
+    props.sideColor,
+    props.faceLight,
+    props.sideLight,
+    props.backLight,
+  ]);
 
   await fetchWindow("main");
   props.windows.main.script = initMain;
@@ -33,17 +42,23 @@ async function initApp() {
   await fetchWindow("picker");
   props.windows.picker.script = initPicker;
 
+  await fetchWindow("light_picker");
+  props.windows.lightPicker.script = initLightPicker;
+
   switchWindow("main");
 }
 
-async function fetchWindow(name) {
+async function fetchWindow(name = "") {
   const template = document.createElement("template");
 
   template.innerHTML = await fetch("./windows/" + name + ".html").then(
     (response) => response.text()
   );
-  props.windows[name] = {};
-  props.windows[name].body = template.content;
+
+  const camelCaseName = toCamelCase(name, "_");
+
+  props.windows[camelCaseName] = {};
+  props.windows[camelCaseName].body = template.content;
 }
 
 async function fetchPalette(name) {
@@ -51,7 +66,7 @@ async function fetchPalette(name) {
     .then((res) => res.json())
     .catch((error) => alert(error))
     .then((palette) => {
-      props.palettes[name] = palette;
+      props.palettes[toCamelCase(name)] = palette;
     });
 }
 
@@ -68,14 +83,25 @@ export function switchWindow(name, params = []) {
   if (props.windows[name].script) props.windows[name].script(props, ...params);
 }
 
-function initColors(colors = []) {
-  colors.forEach((col) => {
-    const palId = col.id.slice(0, col.id.indexOf("-"));
-    col.palette = props.palettes["palette" + palId];
-    col.color = col.palette.colors.find((color) =>
-      palId + "-" + color.id == col.id ? 1 : 0
-    );
+function initColors(colorProps = []) {
+  colorProps.forEach((colProp) => {
+    if (colProp.isOn === undefined) initStaticColor(colProp);
+    else initLightColor(colProp);
   });
+}
+
+function initStaticColor(colorProp) {
+  const palId = colorProp.id.slice(0, colorProp.id.indexOf("-"));
+  colorProp.palette = props.palettes["palette" + palId];
+  colorProp.color = colorProp.palette.colors.find((color) =>
+    palId + "-" + color.id == colorProp.id ? 1 : 0
+  );
+}
+
+function initLightColor(colorProp) {
+  colorProp.color = props.palettes.lightColors.colors.find((color) =>
+    color.id == colorProp.color ? 1 : 0
+  );
 }
 
 // function capitalize(str) {

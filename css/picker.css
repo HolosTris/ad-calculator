@@ -1,10 +1,10 @@
-.window-picker header {
+.info-header {
   position: sticky;
   top: 0;
   background-color: #000;
   z-index: 1;
 }
-.window-picker header section {
+.info-header section {
   display: flex;
   justify-content: space-between;
   width: 100%;
