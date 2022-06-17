@@ -3,12 +3,12 @@ import { isDualColor, getHex, setContrastText } from "./utils.js";
 
 export default function (
   props,
-  choosingProp = "faceColor",
+  choosingPropName = "faceColor",
   palId = "641",
   isLightOn = false
 ) {
   const body = document.body;
-  body.setAttribute("choosing", choosingProp);
+  body.setAttribute("choosing", choosingPropName);
 
   const colorsList = document.getElementsByClassName("colors-list")[0];
   colorsList.setAttribute("palette", "palette" + palId);
@@ -44,24 +44,7 @@ export default function (
         rgb = body.classList.contains("light-on") ? color.rgb[1] : color.rgb[0];
       } else rgb = color.rgb ? color.rgb : [, ,];
 
-      btns.push(createBtn(color, rgb, choosingProp));
-
-      //   colorsList.insertAdjacentHTML(
-      //     "beforeend",
-      //     `
-      // <div class="btn ${
-      //   color.rgb ? setContrastText(rgb) : "black-text"
-      // }" style="background-color: #${hex ? hex : "fff"}">
-      // <b>${color.id}<br />
-      // ${color.name}</b><br />
-      // ${color.rgb ? "RGB " + rgb.join("-") : ""}<br />
-      // ${color.ral ? "RAL " + color.ral : ""}<br />
-      // ${color.cmyk ? "CMYK " + color.cmyk.join("-") : ""}<br />
-      // ${hex ? "HEX " + hex.toUpperCase() : ""}<br />
-      // ${color.pantone ? "PANTONE " + color.pantone : ""}<br />
-      // ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}
-      // </div>`
-      //   );
+      btns.push(createBtn(color, rgb, choosingPropName));
     }
 
     colorsList.append(...btns);
@@ -94,9 +77,11 @@ export default function (
       ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}`;
 
     btn.onclick = (ev) => {
-      props[choosingProp].id = palId + "-" + color.id;
-      props[choosingProp].palette = palette;
-      props[choosingProp].color = color;
+      const choosingProp = props[choosingPropName];
+
+      choosingProp.id = palId + "-" + color.id;
+      choosingProp.palette = palette;
+      choosingProp.color = color;
 
       ev.stopPropagation();
       switchWindow("main");

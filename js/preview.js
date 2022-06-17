@@ -44,13 +44,17 @@ export function changeLetterColor(elemName, color, isLight = false) {
   letter[elemName].style.fill = "#" + getHex(rgb);
 }
 
-let animationRGB;
+let animationsRGB = {};
 
 export function toggleLight(elemName, color, isLight = false) {
   const rgb = color.rgb;
 
   if (color.name === "RGB" && !rgb)
-    isLight ? (animationRGB = animateRGB(elemName)) : animationRGB.cancel();
+    isLight
+      ? elemName === "backLight"
+        ? (animationsRGB[elemName] = animateRGB(elemName))
+        : (animationsRGB[elemName] = animateRGB(elemName, 0.2))
+      : animationsRGB[elemName].cancel();
 
   letter[elemName].style.fill =
     isLight && rgb
@@ -60,13 +64,13 @@ export function toggleLight(elemName, color, isLight = false) {
       : "transparent";
 }
 
-function animateRGB(elemName) {
+function animateRGB(elemName, opacity = 1) {
   return letter[elemName].animate(
     [
-      { fill: "hsl(0, 100%, 50%)" },
-      { fill: "hsl(120, 100%, 50%)" },
-      { fill: "hsl(240, 100%, 50%)" },
-      { fill: "hsl(360, 100%, 50%)" },
+      { fill: "hsl(0, 100%, 50%," + opacity + " )" },
+      { fill: "hsl(120, 100%, 50%," + opacity + " )" },
+      { fill: "hsl(240, 100%, 50%," + opacity + " )" },
+      { fill: "hsl(360, 100%, 50%," + opacity + " )" },
     ],
     {
       id: elemName,

@@ -45,7 +45,7 @@ async function initApp() {
   await fetchWindow("light_picker");
   props.windows.lightPicker.script = initLightPicker;
 
-  switchWindow("main");
+  switchWindow("lightPicker");
 }
 
 async function fetchWindow(name = "") {
@@ -54,6 +54,7 @@ async function fetchWindow(name = "") {
   template.innerHTML = await fetch("./windows/" + name + ".html").then(
     (response) => response.text()
   );
+  console.log(template);
 
   const camelCaseName = toCamelCase(name, "_");
 

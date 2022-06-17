@@ -163,7 +163,6 @@ label {
   text-align: center;
   background-color: #1a1a1a;
 }
-button img,
 .light-img {
   width: 100%;
   height: 42px;
@@ -175,8 +174,7 @@ button img,
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
 }
-button.active .light-img,
-.btn.active .light-img {
+.prop-light .active .light-img {
   background-color: #fff;
 }
 .prop-color {

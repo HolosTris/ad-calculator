@@ -5,6 +5,8 @@ export function setContrastText(rgb) {
 }
 
 export function isBright(rgb) {
+  if (!rgb) return;
+
   const brightness = Math.round(
     (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
   );

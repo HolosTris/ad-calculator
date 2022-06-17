@@ -1,15 +1,37 @@
+.light-colors-list {
+  padding: 6px 0;
+}
+
+/* Color Button */
 .color-con {
   display: flex;
+}
+.color-con + .color-con {
+  margin-top: 4px;
+}
+
+.color-con:hover .info-color,
+.color-con:hover .pick-indicator {
+  border-color: #fff;
 }
 
 .info-color {
   position: relative;
+  display: flex;
   width: 100%;
+  align-items: center;
+  padding: 0;
+}
+.info-color span {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .info-color .intersections-img {
-  position: absolute;
-  width: 36px;
+  /* position: absolute; */
+  min-width: 36px;
   height: 36px;
   background-color: #fff;
   -webkit-mask-image: url(../svg/intersections.svg);
@@ -20,8 +42,11 @@
   -webkit-mask-repeat: no-repeat;
   mask-size: 35px;
   -webkit-mask-size: 35px;
-  top: 0;
-  left: 25px;
+  /* top: 0; */
+  margin-left: 25px;
+}
+.info-color .intersections-img.inverted {
+  background-color: #000;
 }
 
 .pick-indicator {

@@ -91,7 +91,9 @@ function initPropButtons(props) {
         toggleLight(prop, lightColor, props[prop].isOn);
       };
 
-      btn.ondblclick = () => {};
+      btn.ondblclick = (ev) => {
+        switchWindow("lightPicker", [prop]);
+      };
     }
 
     if (btn.parentElement.classList.contains("prop-brightness")) {
