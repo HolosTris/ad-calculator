@@ -44,7 +44,7 @@ export default function (
         rgb = body.classList.contains("light-on") ? color.rgb[1] : color.rgb[0];
       } else rgb = color.rgb ? color.rgb : [, ,];
 
-      btns.push(createBtn(color, rgb, choosingPropName));
+      btns.push(createBtn(color, rgb));
     }
 
     colorsList.append(...btns);

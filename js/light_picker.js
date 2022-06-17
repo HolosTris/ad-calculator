@@ -16,16 +16,7 @@ export default function (props, choosingPropName = "faceLight") {
 
     const btns = [];
 
-    for (let color of palette) {
-      let rgb;
-
-      if (color.rgb && isDualColor(color)) {
-        body.classList.add("used-light");
-        rgb = body.classList.contains("light-on") ? color.rgb[1] : color.rgb[0];
-      } else rgb = color.rgb ? color.rgb : null;
-
-      btns.push(createBtn(color, rgb, choosingPropName));
-    }
+    for (let color of palette) btns.push(createBtn(color, color.rgb));
 
     colorsList.append(...btns);
   }

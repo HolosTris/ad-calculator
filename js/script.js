@@ -1,6 +1,7 @@
 import initPicker from "./picker.js";
 import initMain from "./main.js";
 import initLightPicker from "./light_picker.js";
+import initFontPicker from "./font_picker.js";
 import { toCamelCase } from "./utils.js";
 
 const body = document.body;
@@ -45,7 +46,10 @@ async function initApp() {
   await fetchWindow("light_picker");
   props.windows.lightPicker.script = initLightPicker;
 
-  switchWindow("lightPicker");
+  await fetchWindow("font_picker");
+  props.windows.fontPicker.script = initFontPicker;
+
+  switchWindow("fontPicker");
 }
 
 async function fetchWindow(name = "") {
