@@ -7,7 +7,7 @@ import { toCamelCase } from "./utils.js";
 const body = document.body;
 const props = {
   textSign: "",
-  font: 1,
+  font: { id: 1, isItalic: false },
   textHeight: 10,
   signHeight: 1,
   signWidth: 1,
@@ -20,6 +20,7 @@ const props = {
   isHighBrightness: false,
   windows: {},
   palettes: {},
+  fonts: {},
 };
 
 initApp();
@@ -28,6 +29,8 @@ async function initApp() {
   await fetchPalette("palette641");
   await fetchPalette("palette8500");
   await fetchPalette("light_colors");
+
+  await fetchFonts();
 
   initColors([
     props.faceColor,
@@ -72,6 +75,15 @@ async function fetchPalette(name) {
     .catch((error) => alert(error))
     .then((palette) => {
       props.palettes[toCamelCase(name)] = palette;
+    });
+}
+
+async function fetchFonts() {
+  return await fetch("./json/fonts.json")
+    .then((res) => res.json())
+    .catch((error) => alert(error))
+    .then((fonts) => {
+      props.fonts = fonts;
     });
 }
 

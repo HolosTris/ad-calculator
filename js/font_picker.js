@@ -4,43 +4,68 @@ import { isDualColor, getHex, setContrastText, isBright } from "./utils.js";
 export default function (props) {
   const body = document.body;
 
-  const colorsList = document.getElementsByClassName("light-colors-list")[0];
+  const curFont = props.font;
 
-  const palette = props.palettes.lightColors;
+  let isItalic = curFont.isItalic;
+  initToggleBtn();
 
-  fillList(palette.colors);
+  const fontsList = document.getElementsByClassName("fonts-list")[0];
 
-  function fillList(palette) {
-    colorsList.innerHTML = "";
+  const fonts = props.fonts;
+
+  fillList(fonts);
+
+  function fillList(fonts) {
+    fontsList.innerHTML = "";
 
     const btns = [];
 
-    for (let color of palette) btns.push(createBtn(color, color.rgb));
+    for (let font of fonts) btns.push(createBtn(font));
 
-    colorsList.append(...btns);
+    fontsList.append(...btns);
   }
 
-  function createBtn(color, rgb) {
-    const hex = color.rgb ? getHex(rgb) : null;
+  function createBtn(font) {
+    const isPicked = curFont.id === font.id;
 
     const btn = document.createElement("div");
 
     btn.className = `btn font-con black-text`;
-
+    // url(../svg/fonts/path640.svg)
     btn.innerHTML = `
-    <span></span>
-    <div class="pick-indicator btn">
-      <span></span>
+    <div class="text-svg" style="background-image:url(./svg/fonts${
+      isItalic
+        ? "/italic/path" + (8808 + font.id * 2)
+        : "/path" + (638 + font.id * 2)
+    }.svg)">
+    </div>
+    <div class="pick-indicator btn ${isPicked ? "active" : ""}">
+      <span>${font.id}</span>
     </div>`;
 
     btn.onclick = (ev) => {
       // choosingProp.id = color.id;
       // choosingProp.color = color;
       // choosingProp.isOn = true;
+      curFont.id = font.id;
+      curFont.isItalic = isItalic;
 
       switchWindow("main");
     };
 
     return btn;
+  }
+
+  function initToggleBtn() {
+    const toggleBtn = body.getElementsByClassName("toggle-italic")[0];
+
+    if (isItalic) toggleBtn.classList.add("alter");
+
+    toggleBtn.onclick = () => {
+      isItalic = !isItalic;
+
+      toggleBtn.classList.toggle("alter");
+      fillList(fonts);
+    };
   }
 }

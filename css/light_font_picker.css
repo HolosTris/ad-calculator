@@ -42,6 +42,17 @@
   line-height: 1;
 }
 
+.font-con .text-svg {
+  width: 100%;
+  height: 35px;
+  /* background-image: url(../svg/fonts/path640.svg); */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.font-con .text-svg img {
+  /* height: 27px; */
+}
+
 .info-color .intersections-img {
   /* position: absolute; */
   min-width: 35px;
@@ -72,6 +83,7 @@
   position: relative;
   color: #7c787d;
   margin: -2px;
+  /* margin-left: auto; */
 }
 .pick-indicator.active {
   background-color: #fff;

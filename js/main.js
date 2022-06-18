@@ -22,7 +22,15 @@ function initInputs(props) {
   for (let prop in props) {
     const inp = inputs.namedItem(prop);
 
-    if (inp) {
+    if (!inp) continue;
+
+    if (inp.name === "font") {
+      inp.value = props.font.id;
+
+      inp.onclick = () => {
+        switchWindow("fontPicker");
+      };
+    } else {
       inp.value = props[prop];
 
       inp.onchange = () => {

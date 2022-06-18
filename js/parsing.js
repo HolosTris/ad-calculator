@@ -1094,3 +1094,9 @@ CMYK 31-39-69-5
 HEX AF9161`,
   palette8500
 );
+
+const arr = [];
+for (let i = 1; i <= 35; i++) {
+  arr.push({ id: i, name: "", path: "" });
+}
+console.log(arr);
