@@ -162,6 +162,7 @@ label {
   height: 72px;
   text-align: center;
   background-color: #1a1a1a;
+  /* touch-action: none; */
 }
 .light-img {
   width: 100%;

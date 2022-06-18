@@ -17,6 +17,40 @@ header section:first-child div {
   align-items: center;
 }
 
+.title-toggle h2 {
+  font-size: 10px;
+  text-align: right;
+}
+.title-toggle.with-icon h2 {
+  font-size: 12px;
+}
+
+.title-toggle button {
+  height: 24px;
+  color: #7c787d;
+  font-style: italic;
+  padding: 0 6px;
+  margin-left: 9px;
+}
+.title-toggle button.alter {
+  background-color: #fff;
+}
+.title-toggle.with-icon button {
+  position: relative;
+  padding-left: 14px;
+}
+.with-icon button::before {
+  content: url(../svg/tci.svg);
+  top: 4px;
+  left: 6px;
+  /* width: 8px;
+  height: 13px; */
+  /* background-image: url(../svg/tci.svg); */
+}
+.with-icon button.alter::before {
+  content: url(../svg/tci_italic.svg);
+}
+
 .window-picker main {
   padding: 0 4px;
   position: relative;
@@ -66,6 +100,7 @@ body.light-on .colors-list {
   text-align: center;
   padding: 2px;
   white-space: nowrap;
+  margin: -1px;
 }
 body.light-on .colors-list .btn {
   border: none;
