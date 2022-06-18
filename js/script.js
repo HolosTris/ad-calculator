@@ -49,7 +49,7 @@ async function initApp() {
   await fetchWindow("font_picker");
   props.windows.fontPicker.script = initFontPicker;
 
-  switchWindow("fontPicker");
+  switchWindow("main");
 }
 
 async function fetchWindow(name = "") {

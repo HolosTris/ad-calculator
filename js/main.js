@@ -91,7 +91,10 @@ function initPropButtons(props) {
         toggleLight(prop, lightColor, props[prop].isOn);
       };
 
-      btn.ondblclick = (ev) => {
+      btn.ondblclick = (ev) => switchWindow("lightPicker", [prop]);
+
+      btn.oncontextmenu = (ev) => {
+        ev.preventDefault();
         switchWindow("lightPicker", [prop]);
       };
     }
