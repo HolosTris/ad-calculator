@@ -14,23 +14,33 @@
   </div>
 </div>
 
-<header>
-  <div id="logo-con">
-    <img id="logo" src="./svg/logo.svg" alt="logo" />
-    <h1>Рекламный калькулятор</h1>
-  </div>
-
-  <div id="controls">
-    <img id="yt" src="./svg/yt.svg" alt="" />
-    <div>
-      <img id="basket" src="./svg/basket.svg" alt="" />
-      <button class="more-btn">
-        <hr class="btn-line" />
-        <hr class="btn-line" />
-        <hr class="btn-line" />
-      </button>
+<header class="info-header">
+  <section>
+    <div id="logo-con">
+      <img id="logo" src="./svg/logo.svg" alt="logo" />
+      <h1>Рекламный калькулятор</h1>
     </div>
-  </div>
+
+    <div id="controls">
+      <img id="yt" src="./svg/yt.svg" alt="" />
+      <div>
+        <img id="basket" src="./svg/basket.svg" alt="" />
+        <button class="more-btn">
+          <hr class="btn-line" />
+          <hr class="btn-line" />
+          <hr class="btn-line" />
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="welcome">
+    <p>
+      Дорогие друзья! <br />
+      На РК.рф вы можете быстро заказать и оплатить яркую вывеску. Большое
+      количество шрифтов, цветов, типов подстветки позволит реализовать ваши
+      уникальные пректы.
+    </p>
+  </section>
 </header>
 <main>
   <section class="param">
@@ -38,9 +48,9 @@
       <label for="textSign">текст вывески</label>
       <input type="text" name="textSign" id="" class="large" />
     </div>
-  </section>
 
-  <hr />
+    <hr />
+  </section>
 
   <section class="param">
     <div class="param-con param-font">
@@ -79,8 +89,10 @@
   </section>
 
   <section class="preview">
-    <h2>Световые буквы</h2>
-    <hr />
+    <div class="preview-title">
+      <h2>Световые буквы</h2>
+      <hr />
+    </div>
     <div class="render">
       <div class="render-preview">
         <object id="letter" type="image/svg+xml" data="./svg/letter/letter.svg">

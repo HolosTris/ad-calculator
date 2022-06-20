@@ -14,6 +14,7 @@ export default function (props) {
   initPropButtons(props);
   initModal(props);
   initPreview(props);
+  initWelcome();
 }
 
 function initInputs(props) {
@@ -238,4 +239,22 @@ function createActionBtn(
   };
 
   return btn;
+}
+
+function initWelcome() {
+  const paramsElems = [...body.getElementsByClassName("param")];
+  const titleElem = body.getElementsByClassName("preview-title")[0];
+  const welcomeElem = body.getElementsByClassName("welcome")[0];
+
+  paramsElems.forEach((el) => (el.style.display = "none"));
+  titleElem.style.display = "none";
+
+  const hideWelcome = () => {
+    paramsElems.forEach((el) => (el.style.display = "block"));
+    titleElem.style.display = "block";
+    welcomeElem.style.display = "none";
+    body.removeEventListener("click", hideWelcome);
+  };
+
+  body.addEventListener("click", hideWelcome);
 }
