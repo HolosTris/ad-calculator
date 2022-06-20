@@ -12,15 +12,16 @@ const props = {
   signHeight: 1,
   signWidth: 1,
   mountHeight: 1,
-  faceColor: { id: "641-34", color: null, palette: null },
-  faceLight: { color: 5, isOn: false },
-  sideColor: { id: "8500-528", color: null, palette: null },
-  sideLight: { color: 4, isOn: false },
-  backLight: { color: 7, isOn: true },
+  faceColor: { id: "641-0", color: null, palette: null },
+  faceLight: { color: 1, isOn: false },
+  sideColor: { id: "641-0", color: null, palette: null },
+  sideLight: { color: 1, isOn: false },
+  backLight: { color: 1, isOn: true },
   isHighBrightness: false,
   windows: {},
   palettes: {},
   fonts: {},
+  isWelcomed: false,
 };
 
 initApp();

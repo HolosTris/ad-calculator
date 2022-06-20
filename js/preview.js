@@ -39,9 +39,13 @@ export default function (props) {
 }
 
 export function changeLetterColor(elemName, color, isLight = false) {
-  const rgb = isDualColor(color) ? color.rgb[+isLight] : color.rgb;
+  const rgb = color.rgb
+    ? isDualColor(color)
+      ? color.rgb[+isLight]
+      : color.rgb
+    : null;
 
-  letter[elemName].style.fill = "#" + getHex(rgb);
+  letter[elemName].style.fill = rgb ? "#" + getHex(rgb) : "#fff";
 }
 
 let animationsRGB = {};

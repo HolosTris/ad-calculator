@@ -14,7 +14,7 @@ export default function (props) {
   initPropButtons(props);
   initModal(props);
   initPreview(props);
-  initWelcome();
+  props.isWelcomed ? null : initWelcome(props);
 }
 
 function initInputs(props) {
@@ -127,11 +127,15 @@ function initPropButtons(props) {
 
 function renderColorBtn(btn, colorProp, lightProp) {
   const color = colorProp.color;
-  const rgb = isDualColor(color) ? color.rgb[+lightProp] : color.rgb;
+  const rgb = color.rgb
+    ? isDualColor(color)
+      ? color.rgb[+lightProp]
+      : color.rgb
+    : null;
 
   btn.innerText = `${colorProp.id}\n ${color.name}`;
-  btn.style.backgroundColor = "#" + getHex(rgb);
-  btn.classList.add(setContrastText(rgb));
+  btn.style.backgroundColor = rgb ? "#" + getHex(rgb) : "#fff";
+  btn.classList.add(setContrastText(rgb ? rgb : [255, 255, 255]));
 }
 
 function initModal(props) {
@@ -212,8 +216,9 @@ function createActionBtn(
   const btn = document.createElement("button");
 
   btn.className = `pick-color ${withLight ? "with-ligth" : ""}`;
-  btn.style.backgroundColor =
-    "#" + (withIcon ? getHex(color.rgb[+withLight]) : getHex(color.rgb));
+  btn.style.backgroundColor = color.rgb
+    ? "#" + (withIcon ? getHex(color.rgb[+withLight]) : getHex(color.rgb))
+    : "#fff";
 
   btn.innerHTML = `
     <div class="name">
@@ -241,13 +246,14 @@ function createActionBtn(
   return btn;
 }
 
-function initWelcome() {
+function initWelcome(props) {
   const paramsElems = [...body.getElementsByClassName("param")];
   const titleElem = body.getElementsByClassName("preview-title")[0];
   const welcomeElem = body.getElementsByClassName("welcome")[0];
 
   paramsElems.forEach((el) => (el.style.display = "none"));
   titleElem.style.display = "none";
+  welcomeElem.style.display = "block";
 
   const hideWelcome = () => {
     paramsElems.forEach((el) => (el.style.display = "block"));
@@ -257,4 +263,6 @@ function initWelcome() {
   };
 
   body.addEventListener("click", hideWelcome);
+
+  props.isWelcomed = true;
 }

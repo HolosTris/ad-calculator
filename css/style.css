@@ -29,7 +29,8 @@ body.modal-active {
   width: 100%;
   padding: 6px 8px;
 } */
-.welcome {
+.info-header section.welcome {
+  display: none;
   text-align: center;
   font-size: 17px;
   line-height: 1.3;
