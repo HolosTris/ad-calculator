@@ -21,7 +21,7 @@ const props = {
   windows: {},
   palettes: {},
   fonts: [],
-  isWelcomed: true,
+  isWelcomed: false,
 };
 
 initApp();
