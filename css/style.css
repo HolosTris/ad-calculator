@@ -283,3 +283,12 @@ body.modal-active .modal {
 .with-ligth .btn {
   background-color: #7c787d;
 }
+.tip {
+  width: 100%;
+  padding-right: 20px;
+}
+.tip p {
+  float: right;
+  text-align: center;
+  margin-top: 45px;
+}
