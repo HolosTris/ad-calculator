@@ -26,7 +26,35 @@ function initInputs(props) {
     if (!inp) continue;
 
     if (inp.name === "font") {
-      inp.value = props.font.id;
+      const font = props.fonts.find((el) => props.font.id === el.id);
+      const textSignElem = inputs.namedItem("textSign");
+
+      if (!document.querySelector(`link[href='${font.path}']`))
+        document.head.insertAdjacentHTML(
+          "beforeend",
+          `<link rel="stylesheet" href="${font.path}" />`
+        );
+
+      inp.style.fontFamily = font.family;
+      inp.style.fontWeight = font.weight;
+      inp.style.fontStyle = props.font.isItalic ? "italic" : "normal";
+
+      textSignElem.style.fontFamily = font.family;
+      textSignElem.style.fontWeight = font.weight;
+      textSignElem.style.fontStyle = props.font.isItalic ? "italic" : "normal";
+
+      console.log(textSignElem.labels);
+
+      textSignElem.oninput = () =>
+        (textSignElem.labels[0].style.display = "none");
+
+      const postfix =
+        font.weight === "bold" || font.weight > 500
+          ? " толстый"
+          : font.weight === "normal" || font.weight == 500
+          ? ""
+          : " тонкий";
+      inp.value = font.id + ". " + font.family + postfix;
 
       inp.onclick = () => {
         switchWindow("fontPicker");
@@ -140,7 +168,6 @@ function renderColorBtn(btn, colorProp, lightProp) {
 
 function initModal(props) {
   const modal = body.getElementsByClassName("modal")[0];
-  console.log(body);
 
   modal.onclick = (ev) => {
     modal == ev.target && body.classList.remove("modal-active");
@@ -166,7 +193,7 @@ function showActionBtns(props) {
       props.faceColor.color,
       props.palettes.palette8500
     );
-    console.log(pickingColor);
+
     btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, true));
     btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, false));
   } else {
@@ -174,7 +201,7 @@ function showActionBtns(props) {
       props.faceColor.color,
       props.palettes.palette641
     );
-    console.log(pickingColor);
+
     btns.push(createActionBtn(pickingColor, "faceColor", "641", false));
   }
 
@@ -214,6 +241,7 @@ function createActionBtn(
   withLight = false
 ) {
   const btn = document.createElement("button");
+  const elemLetter = choosingProp.replace("Color", "");
 
   btn.className = `pick-color ${withLight ? "with-ligth" : ""}`;
   btn.style.backgroundColor = color.rgb
@@ -234,8 +262,13 @@ function createActionBtn(
         : ""
     }
     <div class="tip">
-      цвет лица буквы
-      ${withIcon ? "<br/>" + (withLight ? "с засветкой" : "без засветки") : ""}
+      <img src="./svg/${elemLetter + (withLight ? "_light" : "")}.svg" alt="" />
+      <p>
+        цвет ${elemLetter === "face" ? "лица буквы" : "боковины"} 
+        ${
+          withIcon ? "<br/>" + (withLight ? "с засветкой" : "без засветки") : ""
+        }
+      </p>
     </div>`;
 
   btn.onclick = (ev) => {
@@ -259,10 +292,10 @@ function initWelcome(props) {
     paramsElems.forEach((el) => (el.style.display = "block"));
     titleElem.style.display = "block";
     welcomeElem.style.display = "none";
-    body.removeEventListener("click", hideWelcome);
+    body.removeEventListener("pointerdown", hideWelcome);
   };
 
-  body.addEventListener("click", hideWelcome);
+  body.addEventListener("pointerdown", hideWelcome);
 
   props.isWelcomed = true;
 }

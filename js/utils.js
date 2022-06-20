@@ -34,6 +34,8 @@ export function findSimilarColor(color, palette) {
 
   if (exactColor) return exactColor;
 
+  if (!color.rgb) return palette.colors[0];
+
   const rgb = isDualColor(color) ? color.rgb[0] : color.rgb;
   const comparedColors = palette.colors.map((curCol) => {
     if (!curCol.rgb) return { color: curCol, similarity: Infinity };

@@ -20,7 +20,7 @@ const props = {
   isHighBrightness: false,
   windows: {},
   palettes: {},
-  fonts: {},
+  fonts: [],
   isWelcomed: false,
 };
 
@@ -96,6 +96,7 @@ export function switchWindow(name, params = []) {
 
   const window = props.windows[name].body.cloneNode(true);
 
+  scrollTo(0, 0);
   body.append(window);
 
   if (props.windows[name].script) props.windows[name].script(props, ...params);

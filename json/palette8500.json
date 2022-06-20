@@ -4,6 +4,15 @@
 
   "colors": [
     {
+      "id": 0,
+      "name": "прозрачный",
+      "rgb": null,
+      "ral": null,
+      "cmyk": null,
+      "pantone": null,
+      "tikkurila": null
+    },
+    {
       "id": 10,
       "name": "белый",
       "rgb": [

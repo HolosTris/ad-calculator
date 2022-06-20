@@ -1,37 +1,212 @@
 [
-  { "id": 1, "name": "", "path": "" },
-  { "id": 2, "name": "", "path": "" },
-  { "id": 3, "name": "", "path": "" },
-  { "id": 4, "name": "", "path": "" },
-  { "id": 5, "name": "", "path": "" },
-  { "id": 6, "name": "", "path": "" },
-  { "id": 7, "name": "", "path": "" },
-  { "id": 8, "name": "", "path": "" },
-  { "id": 9, "name": "", "path": "" },
-  { "id": 10, "name": "", "path": "" },
-  { "id": 11, "name": "", "path": "" },
-  { "id": 12, "name": "", "path": "" },
-  { "id": 13, "name": "", "path": "" },
-  { "id": 14, "name": "", "path": "" },
-  { "id": 15, "name": "", "path": "" },
-  { "id": 16, "name": "", "path": "" },
-  { "id": 17, "name": "", "path": "" },
-  { "id": 18, "name": "", "path": "" },
-  { "id": 19, "name": "", "path": "" },
-  { "id": 20, "name": "", "path": "" },
-  { "id": 21, "name": "", "path": "" },
-  { "id": 22, "name": "", "path": "" },
-  { "id": 23, "name": "", "path": "" },
-  { "id": 24, "name": "", "path": "" },
-  { "id": 25, "name": "", "path": "" },
-  { "id": 26, "name": "", "path": "" },
-  { "id": 27, "name": "", "path": "" },
-  { "id": 28, "name": "", "path": "" },
-  { "id": 29, "name": "", "path": "" },
-  { "id": 30, "name": "", "path": "" },
-  { "id": 31, "name": "", "path": "" },
-  { "id": 32, "name": "", "path": "" },
-  { "id": 33, "name": "", "path": "" },
-  { "id": 34, "name": "", "path": "" },
-  { "id": 35, "name": "", "path": "" }
+  {
+    "id": 1,
+    "family": "Acrom",
+    "weight": "300",
+    "path": "./fonts/Acrom/stylesheet.css"
+  },
+  {
+    "id": 2,
+    "family": "Acrom",
+    "weight": "500",
+    "path": "./fonts/Acrom/stylesheet.css"
+  },
+  {
+    "id": 3,
+    "family": "Acrom",
+    "weight": "800",
+    "path": "./fonts/Acrom/stylesheet.css"
+  },
+  {
+    "id": 4,
+    "family": "Arial",
+    "weight": "100",
+    "path": "./fonts/Arial/stylesheet.css"
+  },
+  {
+    "id": 5,
+    "family": "Arial",
+    "weight": "normal",
+    "path": "./fonts/Arial/stylesheet.css"
+  },
+  {
+    "id": 6,
+    "family": "Arial",
+    "weight": "900",
+    "path": "./fonts/Arial/stylesheet.css"
+  },
+  {
+    "id": 7,
+    "family": "Arial Narrow",
+    "weight": "normal",
+    "path": "./fonts/Arial/stylesheet.css"
+  },
+  {
+    "id": 8,
+    "family": "Arial Narrow",
+    "weight": "bold",
+    "path": "./fonts/Arial/stylesheet.css"
+  },
+  {
+    "id": 9,
+    "family": "Avenir Next Cyr",
+    "weight": "100",
+    "path": "./fonts/AvenirNextCyr/stylesheet.css"
+  },
+  {
+    "id": 10,
+    "family": "Avenir Next Cyr",
+    "weight": "normal",
+    "path": "./fonts/AvenirNextCyr/stylesheet.css"
+  },
+  {
+    "id": 11,
+    "family": "Avenir Next Cyr",
+    "weight": "900",
+    "path": "./fonts/AvenirNextCyr/stylesheet.css"
+  },
+  {
+    "id": 12,
+    "family": "Bebas Neue Book",
+    "weight": "normal",
+    "path": "./fonts/BebasNeue/stylesheet.css"
+  },
+  {
+    "id": 13,
+    "family": "Bebas Neue",
+    "weight": "normal",
+    "path": "./fonts/BebasNeue/stylesheet.css"
+  },
+  {
+    "id": 14,
+    "family": "Bebas Neue",
+    "weight": "bold",
+    "path": "./fonts/BebasNeue/stylesheet.css"
+  },
+  {
+    "id": 15,
+    "family": "Century Gothic",
+    "weight": "normal",
+    "path": "./fonts/CenturyGothic/stylesheet.css"
+  },
+  {
+    "id": 16,
+    "family": "Century Gothic",
+    "weight": "bold",
+    "path": "./fonts/CenturyGothic/stylesheet.css"
+  },
+  {
+    "id": 17,
+    "family": "Cera Pro",
+    "weight": "300",
+    "path": "./fonts/CeraPro/stylesheet.css"
+  },
+  {
+    "id": 18,
+    "family": "Cera Pro",
+    "weight": "500",
+    "path": "./fonts/CeraPro/stylesheet.css"
+  },
+  {
+    "id": 19,
+    "family": "Cera Pro",
+    "weight": "900",
+    "path": "./fonts/CeraPro/stylesheet.css"
+  },
+  {
+    "id": 20,
+    "family": "DIN Pro",
+    "weight": "normal",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 21,
+    "family": "DIN Pro",
+    "weight": "500",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 22,
+    "family": "DIN Pro",
+    "weight": "900",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 23,
+    "family": "DIN Pro Cond",
+    "weight": "normal",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 24,
+    "family": "DIN Pro Cond",
+    "weight": "500",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 25,
+    "family": "DIN Pro Cond",
+    "weight": "900",
+    "path": "./fonts/DINPro/stylesheet.css"
+  },
+  {
+    "id": 26,
+    "family": "Futura PT",
+    "weight": "300",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 27,
+    "family": "Futura PT Book",
+    "weight": "normal",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 28,
+    "family": "Futura PT",
+    "weight": "500",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 29,
+    "family": "Futura PT Demi",
+    "weight": "600",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 30,
+    "family": "Futura PT",
+    "weight": "bold",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 31,
+    "family": "Futura PT Extra",
+    "weight": "800",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 32,
+    "family": "Futura PT Cond Book",
+    "weight": "normal",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 33,
+    "family": "Futura PT Cond",
+    "weight": "500",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 34,
+    "family": "Futura PT Cond",
+    "weight": "bold",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  },
+  {
+    "id": 35,
+    "family": "Futura PT Cond Extra",
+    "weight": "800",
+    "path": "./fonts/FuturaPT/stylesheet.css"
+  }
 ]
