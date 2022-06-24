@@ -3,20 +3,21 @@ import initMain from "./main.js";
 import initLightPicker from "./light_picker.js";
 import initFontPicker from "./font_picker.js";
 import { toCamelCase } from "./utils.js";
+import initBasket from "./basket.js";
 
 const body = document.body;
 const props = {
   textSign: "",
   font: { id: 1, isItalic: false },
-  textHeight: 10,
+  textHeight: 0.3,
   signHeight: 1,
   signWidth: 1,
   mountHeight: 1,
   faceColor: { id: "641-0", color: null, palette: null },
-  faceLight: { color: 1, isOn: false },
+  faceLight: { id: 1, color: null, isOn: false },
   sideColor: { id: "641-0", color: null, palette: null },
-  sideLight: { color: 1, isOn: false },
-  backLight: { color: 1, isOn: true },
+  sideLight: { id: 1, color: null, isOn: false },
+  backLight: { id: 1, color: null, isOn: true },
   isHighBrightness: false,
   windows: {},
   palettes: {},
@@ -33,7 +34,7 @@ async function initApp() {
 
   await fetchFonts();
 
-  initColors([
+  initAllColors([
     props.faceColor,
     props.sideColor,
     props.faceLight,
@@ -54,9 +55,9 @@ async function initApp() {
   props.windows.fontPicker.script = initFontPicker;
 
   await fetchWindow("basket");
-  // props.windows.basket.script = initBasket;
+  props.windows.basket.script = initBasket;
 
-  switchWindow("basket");
+  switchWindow("main");
 }
 
 async function fetchWindow(name = "") {
@@ -105,11 +106,15 @@ export function switchWindow(name, params = []) {
   if (props.windows[name].script) props.windows[name].script(props, ...params);
 }
 
-function initColors(colorProps = []) {
+function initAllColors(colorProps = []) {
   colorProps.forEach((colProp) => {
-    if (colProp.isOn === undefined) initStaticColor(colProp);
-    else initLightColor(colProp);
+    initColor(colProp);
   });
+}
+
+export function initColor(colorProp) {
+  if (colorProp.isOn === undefined) return initStaticColor(colorProp);
+  else return initLightColor(colorProp);
 }
 
 function initStaticColor(colorProp) {
@@ -118,12 +123,16 @@ function initStaticColor(colorProp) {
   colorProp.color = colorProp.palette.colors.find((color) =>
     palId + "-" + color.id == colorProp.id ? 1 : 0
   );
+
+  return colorProp;
 }
 
 function initLightColor(colorProp) {
   colorProp.color = props.palettes.lightColors.colors.find((color) =>
-    color.id == colorProp.color ? 1 : 0
+    color.id == colorProp.id ? 1 : 0
   );
+
+  return colorProp;
 }
 
 // function capitalize(str) {

@@ -61,9 +61,14 @@ export default function (
   function createBtn(color, rgb) {
     const hex = color.rgb ? getHex(rgb) : null;
 
+    const curColor = props[choosingPropName].color;
+    const isPicked = curColor === color;
+
     const btn = document.createElement("div");
 
     btn.className = `btn ${color.rgb ? setContrastText(rgb) : "black-text"}`;
+    isPicked ? btn.classList.add("is-picked") : "";
+
     btn.style.backgroundColor = "#" + (hex ? hex : "fff");
 
     btn.innerHTML = `

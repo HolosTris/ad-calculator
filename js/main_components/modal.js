@@ -1,5 +1,5 @@
-import { switchWindow } from "./script.js";
-import { findSimilarColor, getHex } from "./utils.js";
+import { switchWindow } from "../script.js";
+import { findSimilarColor, getHex } from "../utils.js";
 
 const body = document.body;
 
@@ -16,10 +16,10 @@ function initModal(props) {
     (btn) => (btn.onclick = () => body.classList.remove("modal-active"))
   );
 
-  showActionBtns(props);
+  showModalActionBtns(props);
 }
 
-export function showActionBtns(props) {
+export function showModalActionBtns(props) {
   body.getElementsByClassName("modal-actions")[0].innerHTML = "";
 
   const btns = [];
@@ -31,15 +31,19 @@ export function showActionBtns(props) {
       props.palettes.palette8500
     );
 
-    btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, true));
-    btns.push(createActionBtn(pickingColor, "faceColor", "8500", true, false));
+    btns.push(
+      createModalActionBtn(pickingColor, "faceColor", "8500", true, true)
+    );
+    btns.push(
+      createModalActionBtn(pickingColor, "faceColor", "8500", true, false)
+    );
   } else {
     pickingColor = findSimilarColor(
       props.faceColor.color,
       props.palettes.palette641
     );
 
-    btns.push(createActionBtn(pickingColor, "faceColor", "641", false));
+    btns.push(createModalActionBtn(pickingColor, "faceColor", "641", false));
   }
 
   if (props.sideLight.isOn) {
@@ -47,21 +51,25 @@ export function showActionBtns(props) {
       props.sideColor.color,
       props.palettes.palette8500
     );
-    btns.push(createActionBtn(pickingColor, "sideColor", "8500", true, true));
-    btns.push(createActionBtn(pickingColor, "sideColor", "8500", true, false));
+    btns.push(
+      createModalActionBtn(pickingColor, "sideColor", "8500", true, true)
+    );
+    btns.push(
+      createModalActionBtn(pickingColor, "sideColor", "8500", true, false)
+    );
   } else {
     pickingColor = findSimilarColor(
       props.sideColor.color,
       props.palettes.palette641
     );
     console.log(pickingColor);
-    btns.push(createActionBtn(pickingColor, "sideColor", "641", false));
+    btns.push(createModalActionBtn(pickingColor, "sideColor", "641", false));
   }
 
   document.getElementsByClassName("modal-actions")[0].append(...btns);
 }
 
-function createActionBtn(
+function createModalActionBtn(
   color,
   choosingProp,
   palId,

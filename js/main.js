@@ -1,16 +1,19 @@
 import { switchWindow } from "./script.js";
-import initPreview from "./preview.js";
-import initPropButtons from "./prop_buttons.js";
-import initModal from "./modal.js";
+import initPreview from "./main_components/preview.js";
+import initPropButtons from "./main_components/prop_buttons.js";
+import initModal from "./main_components/modal.js";
 import { getHex, isBright } from "./utils.js";
+import initHeader from "./header.js";
 
 const body = document.body;
 
-export default function (props) {
+function initMain(props) {
+  initHeader();
   initInputs(props);
   initPropButtons(props);
   initModal(props);
   initPreview(props);
+  initActionButtons(props);
   props.isWelcomed ? null : initWelcome(props);
 }
 
@@ -40,8 +43,6 @@ function initInputs(props) {
       textSignElem.style.fontWeight = font.weight;
       textSignElem.style.fontStyle = props.font.isItalic ? "italic" : "normal";
 
-      textSignElem.focus();
-
       const textRgb = props.faceColor.color.rgb;
       if (textRgb) {
         textSignElem.style.color = "#" + getHex(textRgb);
@@ -50,9 +51,13 @@ function initInputs(props) {
           : "-0.5px 0 #fff, 0 0.5px #fff, 0.5px 0 #fff, 0 -0.5px #fff";
       }
 
-      if (textSignElem.value) textSignElem.labels[0].style.display = "none";
-      textSignElem.oninput = () =>
-        (textSignElem.labels[0].style.display = "none");
+      const extendTextSign = () => {
+        textSignElem.labels[0].style.display = "none";
+        textSignElem.parentElement.classList.add("extended-con");
+      };
+
+      if (textSignElem.value) extendTextSign();
+      textSignElem.oninput = extendTextSign;
 
       const postfix =
         font.weight === "bold" || font.weight > 500
@@ -66,13 +71,21 @@ function initInputs(props) {
         switchWindow("fontPicker");
       };
     } else {
-      inp.value = props[prop];
+      const multiplier = inp.dataset.multiplier;
+
+      inp.value = multiplier ? props[prop] * multiplier : props[prop];
+
+      console.log(inp.dataset.multiplier);
 
       inp.onchange = () => {
-        props[prop] = inp.classList.contains("inp-number")
+        let value = inp.classList.contains("inp-number")
           ? +inp.value
           : inp.value;
-        inp.value = props[prop];
+
+        value /= multiplier ? multiplier : 1;
+        props[prop] = value;
+
+        inp.value = multiplier ? props[prop] * multiplier : props[prop];
       };
     }
   }
@@ -91,6 +104,15 @@ function initWelcome(props) {
     paramsElems.forEach((el) => (el.style.display = "block"));
     titleElem.style.display = "block";
     welcomeElem.style.display = "none";
+
+    const textSignElem = document.getElementById("text-sign");
+    const focusTextSign = (ev) => {
+      textSignElem.focus();
+
+      body.removeEventListener("pointerup", focusTextSign);
+    };
+    body.addEventListener("pointerup", focusTextSign);
+
     body.removeEventListener("pointerdown", hideWelcome);
   };
 
@@ -98,3 +120,50 @@ function initWelcome(props) {
 
   props.isWelcomed = true;
 }
+
+function initActionButtons(props) {
+  const actionsELem = body.getElementsByClassName("actions")[0];
+  const actionBtns = actionsELem.getElementsByTagName("button");
+
+  actionBtns.namedItem("addToBasket").onclick = () => addToBasket(props);
+}
+
+function addToBasket(props) {
+  const sign = {
+    text: props.textSign,
+    font: props.font,
+    height: props.signHeight,
+    width: props.signWidth,
+    textHeight: props.textHeight,
+    mountHeight: props.mountHeight,
+    faceColor: props.faceColor,
+    faceLight: props.faceLight,
+    sideColor: props.sideColor,
+    sideLight: props.sideLight,
+    backLight: props.backLight,
+    isHighBrightness: props.isHighBrightness,
+  };
+
+  const orders = localStorage.getItem("orders")
+    ? JSON.parse(localStorage.getItem("orders"))
+    : [];
+
+  const jsonSign = JSON.stringify(sign, (key, value) => {
+    return key === "palette" || key === "color" ? undefined : value;
+  });
+  const isAlreadyHad = orders.find((order) => {
+    console.log(order);
+    console.log(sign);
+    return jsonSign === JSON.stringify(order);
+  });
+  const newOrder = JSON.parse(jsonSign);
+
+  if (!isAlreadyHad) orders.push(newOrder);
+
+  const jsonOrders = JSON.stringify(orders);
+
+  localStorage.setItem("orders", jsonOrders);
+  console.log(localStorage.getItem("orders"));
+}
+
+export default initMain;

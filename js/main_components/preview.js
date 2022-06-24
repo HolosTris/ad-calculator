@@ -1,4 +1,4 @@
-import { getHex, isDualColor } from "./utils.js";
+import { getHex, isDualColor } from "../utils.js";
 
 const letter = {};
 

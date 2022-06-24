@@ -1,6 +1,7 @@
-import { showActionBtns } from "./modal.js";
+import { showModalActionBtns } from "./modal.js";
 import { changeLetterColor, toggleLight } from "./preview.js";
-import { getHex, isDualColor, setContrastText } from "./utils.js";
+import { getHex, isDualColor, setContrastText } from "../utils.js";
+import { switchWindow } from "../script.js";
 
 const body = document.body;
 
@@ -18,13 +19,19 @@ function initPropButtons(props) {
 
       btn.onclick = () => {
         body.classList.add("modal-active");
-        showActionBtns(props);
+        showModalActionBtns(props);
       };
     }
 
     if (btn.parentElement.classList.contains("prop-light")) {
       const lightColor = props[prop].color;
       const render = () => {
+        const isLongLabel = lightColor.name.length > 8;
+
+        isLongLabel
+          ? btn.classList.add("long-label")
+          : btn.classList.remove("long-label");
+
         props[prop].isOn
           ? btn.classList.add("active")
           : btn.classList.remove("active");

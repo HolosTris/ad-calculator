@@ -36,7 +36,9 @@
     </div>
 
     <div id="controls">
-      <img id="yt" src="./svg/yt.svg" alt="" />
+      <a id="yt" href="">
+        <img src="./svg/yt.svg" alt="" />
+      </a>
       <div>
         <img id="basket" src="./svg/basket.svg" alt="" />
         <button class="more-btn">
@@ -84,7 +86,7 @@
         name="textHeight"
         id=""
         class="mini inp-number"
-        multiplier="100"
+        data-multiplier="100"
       />
     </div>
     <div class="param-con">
@@ -179,9 +181,11 @@
     </div>
 
     <div class="actions">
-      <div class="wrapper"><button>прислать проект и счет</button></div>
       <div class="wrapper">
-        <button>
+        <button>прислать проект и счет</button>
+      </div>
+      <div class="wrapper">
+        <button name="addToBasket">
           <img height="30" src="./svg/basket.svg" alt="" />
         </button>
       </div>

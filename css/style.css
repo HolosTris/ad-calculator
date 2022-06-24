@@ -72,12 +72,21 @@ footer h2 {
   justify-content: space-between;
 }
 
+#logo-con {
+  cursor: pointer;
+}
+
 #logo {
   width: 24px;
 }
 
+#yt {
+  display: inline-flex;
+}
+
 #basket {
   margin-right: 10px;
+  cursor: pointer;
 }
 
 /* Line */
@@ -104,6 +113,11 @@ main {
   margin: 0 30px;
   margin-bottom: 5px;
   color: #7c787d;
+}
+.extended-con {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 5px;
 }
 .param-con label {
   white-space: nowrap;
@@ -202,6 +216,9 @@ label {
 }
 .prop-light button {
   font-size: 12px;
+}
+.prop-light button.long-label {
+  font-size: 8px;
 }
 .prop-light button .label {
   /* white-space: nowrap; */

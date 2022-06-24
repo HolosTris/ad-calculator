@@ -49,6 +49,17 @@ export default function (props, choosingPropName = "faceLight") {
       choosingProp.color = color;
       choosingProp.isOn = true;
 
+      if (
+        choosingPropName === "faceLight" ||
+        choosingPropName === "sideLight"
+      ) {
+        props["faceLight"].id = color.id;
+        props["faceLight"].color = color;
+
+        props["sideLight"].id = color.id;
+        props["sideLight"].color = color;
+      }
+
       switchWindow("main");
     };
 

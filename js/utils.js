@@ -43,11 +43,12 @@ export function findSimilarColor(color, palette) {
     if (!curCol.rgb) return { color: curCol, similarity: Infinity };
 
     const curRGB = isDualColor(curCol) ? curCol.rgb[0] : curCol.rgb;
-    const [simR, simG, simB] = curRGB.map((val, i) =>
-      invlerp(val, 255, rgb[i])
+    const [simR, simG, simB] = curRGB.map(
+      (val, i) => val - rgb[i]
+      // invlerp(val, 255, rgb[i])
     );
 
-    return { color: curCol, similarity: (simR + simG + simB) / 3 };
+    return { color: curCol, similarity: simR + simG + simB };
   });
   const closestSimilarity = findClosestNum(
     comparedColors.map((item) => item.similarity),
@@ -58,6 +59,7 @@ export function findSimilarColor(color, palette) {
   const similarColor = comparedColors.find(
     (item) => item.similarity === closestSimilarity
   ).color;
+  console.log(similarColor);
 
   return similarColor;
 }
@@ -79,7 +81,7 @@ export const invlerp = (x, y, a) => (a - x) / (y - x);
 
 export function findClosestNum(data, num) {
   console.log(...data);
-  const closestRight = Math.min(...data.filter((v) => v > num));
-  const closestLeft = Math.max(...data.filter((v) => v < num));
-  return closestRight - num < closestLeft - num ? closestRight : closestLeft;
+  const closestMore = Math.min(...data.filter((v) => v > num));
+  const closestLess = Math.max(...data.filter((v) => v < num));
+  return closestMore - num < num - closestLess ? closestMore : closestLess;
 }
