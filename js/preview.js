@@ -31,10 +31,12 @@ export default function (props) {
     const isBackLight = props.backLight.isOn;
     const backLightColor = props.backLight.color;
 
-    toggleLight("faceLight", faceLightColor, isFaceLight);
-    toggleLight("sideLight", sideLightColor, isSideLight);
+    const isBright = props.isHighBrightness;
 
-    toggleLight("backLight", backLightColor, isBackLight);
+    toggleLight("faceLight", faceLightColor, isFaceLight, isBright);
+    toggleLight("sideLight", sideLightColor, isSideLight, isBright);
+
+    toggleLight("backLight", backLightColor, isBackLight, isBright);
   };
 }
 
@@ -50,21 +52,21 @@ export function changeLetterColor(elemName, color, isLight = false) {
 
 let animationsRGB = {};
 
-export function toggleLight(elemName, color, isLight = false) {
+export function toggleLight(elemName, color, isLight = false, isBright) {
   const rgb = color.rgb;
 
   if (color.name === "RGB" && !rgb)
     isLight
       ? elemName === "backLight"
-        ? (animationsRGB[elemName] = animateRGB(elemName))
+        ? (animationsRGB[elemName] = animateRGB(elemName, 0.5))
         : (animationsRGB[elemName] = animateRGB(elemName, 0.2))
       : animationsRGB[elemName].cancel();
 
   letter[elemName].style.fill =
     isLight && rgb
       ? elemName === "backLight"
-        ? "#" + getHex(rgb)
-        : `rgba(${rgb},0.2)`
+        ? `rgba(${rgb}, ${0.5 * (isBright + 1)})`
+        : `rgba(${rgb}, ${0.15 * (isBright + 1)})`
       : "transparent";
 }
 

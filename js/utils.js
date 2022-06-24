@@ -14,6 +14,8 @@ export function isBright(rgb) {
 }
 
 export function getHex(rgb) {
+  if (!rgb) return "fff";
+
   return rgb
     .map((x) => {
       const hexDig = x.toString(16);

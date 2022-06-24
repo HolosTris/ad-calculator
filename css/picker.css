@@ -104,6 +104,7 @@ body.light-on .colors-list {
 }
 body.light-on .colors-list .btn {
   border: none;
+  padding: 4px;
   /* width: 74px;
   height: 74px;
   margin: -2px 0 0 -2px; */

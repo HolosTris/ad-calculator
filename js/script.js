@@ -21,7 +21,7 @@ const props = {
   windows: {},
   palettes: {},
   fonts: [],
-  isWelcomed: false,
+  isWelcomed: true,
 };
 
 initApp();
@@ -53,7 +53,10 @@ async function initApp() {
   await fetchWindow("font_picker");
   props.windows.fontPicker.script = initFontPicker;
 
-  switchWindow("main");
+  await fetchWindow("basket");
+  // props.windows.basket.script = initBasket;
+
+  switchWindow("basket");
 }
 
 async function fetchWindow(name = "") {

@@ -1,0 +1,78 @@
+<header class="info-header">
+  <section>
+    <div id="logo-con">
+      <img id="logo" src="./svg/logo.svg" alt="logo" />
+      <h1>Рекламный калькулятор</h1>
+    </div>
+
+    <div id="controls">
+      <img id="yt" src="./svg/yt.svg" alt="" />
+      <div>
+        <img id="basket" src="./svg/basket.svg" alt="" />
+        <button class="more-btn">
+          <hr class="btn-line" />
+          <hr class="btn-line" />
+          <hr class="btn-line" />
+        </button>
+      </div>
+    </div>
+  </section>
+</header>
+<main>
+  <section class="orders-list">
+    <!-- Place for fonts -->
+    <div class="order-card">
+      <div class="title">
+        <span class="label">текст вывески</span>
+        <span class="value">Продукты</span>
+      </div>
+      <div class="description">
+        <div class="mini-preview">
+          <object
+            class="letter-render"
+            type="image/svg+xml"
+            data="./svg/letter/letter.svg"
+          ></object>
+        </div>
+
+        <div class="description-body">
+          <p class="font">
+            <span class="label">шрифт</span>
+            <span class="value">1. Arial обычный</span>
+          </p>
+          <p class="height-font">
+            <span class="label">
+              высота шрифта <span class="value">30</span> см
+            </span>
+          </p>
+          <div class="order-actions">
+            <button name="sendProject">прислать проект и счет</button>
+            <button name="pay">оплатить</button>
+          </div>
+        </div>
+      </div>
+      <div class="extra">
+        <p class="order-price">
+          <span>
+            <span class="label">
+              стоимость <span class="value">---</span> рубля
+            </span>
+          </span>
+          <span class="small">
+            <span class="label">
+              (ндс <span class="value">---</span> рублей)
+            </span>
+          </span>
+        </p>
+        <p class="with-discount">
+          <span>
+            <span class="label">
+              со скидкой <span class="value">---</span> рубля
+            </span>
+          </span>
+          <span class="small date">15:31 03.08.2022</span>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>

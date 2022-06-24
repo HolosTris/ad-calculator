@@ -1,3 +1,12 @@
+@import url("./basket.css");
+
+@font-face {
+  font-family: Inter;
+  src: url("../fonts/Inter-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
 *,
 *::before,
 *::after {
@@ -99,8 +108,8 @@ main {
 .param-con label {
   white-space: nowrap;
 }
-.param-con input {
-  margin-left: 15px;
+.param-con label {
+  margin-right: 15px;
 }
 .param-font {
   margin-bottom: 10px;
@@ -180,7 +189,7 @@ label {
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
 }
-.prop-light .active .light-img {
+.prop .active .light-img {
   background-color: #fff;
 }
 .prop-color {
