@@ -125,6 +125,9 @@ main {
 .param-con label {
   margin-right: 15px;
 }
+.param-text {
+  margin-bottom: -8px;
+}
 .param-font {
   margin-bottom: 10px;
 }
@@ -150,11 +153,11 @@ label {
   font-weight: 400;
   font-size: 15px;
   margin-left: 30px;
-  margin-bottom: 5px;
 }
 
 .render {
   display: flex;
+  justify-content: stretch;
 }
 
 .render-preview {
@@ -165,6 +168,14 @@ label {
   z-index: -1;
   top: -10px;
   left: -20px;
+}
+.render-preview span {
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  /* transform: translate(-50%, -50%); */
+  font-size: 10px;
+  white-space: nowrap;
 }
 
 .render-props {
@@ -317,4 +328,22 @@ body.modal-active .modal {
   float: right;
   text-align: center;
   margin-top: 45px;
+}
+
+.rgb {
+  animation: rgbAnimation 10s linear infinite;
+}
+@keyframes rgbAnimation {
+  0% {
+    background-color: hsla(0, 100%, 50%);
+  }
+  33.3% {
+    background-color: hsl(120, 100%, 50%);
+  }
+  66.6% {
+    background-color: hsl(240, 100%, 50%);
+  }
+  100% {
+    background-color: hsl(360, 100%, 50%);
+  }
 }

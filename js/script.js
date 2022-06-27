@@ -8,11 +8,11 @@ import initBasket from "./basket.js";
 const body = document.body;
 const props = {
   textSign: "",
-  font: { id: 1, isItalic: false },
+  font: { id: 1, values: undefined, isItalic: false },
   textHeight: 0.3,
   signHeight: 1,
-  signWidth: 1,
-  mountHeight: 1,
+  signWidth: 2,
+  mountHeight: 4,
   faceColor: { id: "641-0", color: null, palette: null },
   faceLight: { id: 1, color: null, isOn: false },
   sideColor: { id: "641-0", color: null, palette: null },
@@ -34,13 +34,14 @@ async function initApp() {
 
   await fetchFonts();
 
-  initAllColors([
+  initColors([
     props.faceColor,
     props.sideColor,
     props.faceLight,
     props.sideLight,
     props.backLight,
   ]);
+  initFont(props.font);
 
   await fetchWindow("main");
   props.windows.main.script = initMain;
@@ -106,7 +107,7 @@ export function switchWindow(name, params = []) {
   if (props.windows[name].script) props.windows[name].script(props, ...params);
 }
 
-function initAllColors(colorProps = []) {
+export function initColors(colorProps = []) {
   colorProps.forEach((colProp) => {
     initColor(colProp);
   });
@@ -133,6 +134,10 @@ function initLightColor(colorProp) {
   );
 
   return colorProp;
+}
+
+export function initFont(font) {
+  font.values = props.fonts.find((el) => font.id === el.id);
 }
 
 // function capitalize(str) {

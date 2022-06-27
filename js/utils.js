@@ -44,7 +44,7 @@ export function findSimilarColor(color, palette) {
 
     const curRGB = isDualColor(curCol) ? curCol.rgb[0] : curCol.rgb;
     const [simR, simG, simB] = curRGB.map(
-      (val, i) => val - rgb[i]
+      (val, i) => Math.abs(val - rgb[i])
       // invlerp(val, 255, rgb[i])
     );
 
@@ -85,3 +85,42 @@ export function findClosestNum(data, num) {
   const closestLess = Math.max(...data.filter((v) => v < num));
   return closestMore - num < num - closestLess ? closestMore : closestLess;
 }
+
+export function getNameFont(font) {
+  const postfix =
+    font.weight === "bold" || font.weight > 500
+      ? " толстый"
+      : font.weight === "normal" || font.weight == 500
+      ? ""
+      : " тонкий";
+  return font.id + ". " + font.family + postfix;
+}
+
+export function stylizeTextElem(textElem, font, props) {
+  textElem.style.fontFamily = font.family;
+  textElem.style.fontWeight = font.weight;
+  textElem.style.fontStyle = props.font.isItalic ? "italic" : "normal";
+  if (props.faceColor.color.rgb) {
+    const textRgb = isDualColor(props.faceColor.color)
+      ? props.faceColor.color.rgb[+props.faceLight.isOn]
+      : props.faceColor.color.rgb;
+
+    textElem.style.color = "#" + getHex(textRgb);
+    textElem.style.textShadow = isBright(textRgb)
+      ? "none"
+      : "-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff";
+  }
+}
+
+export function validate(value, type = "number") {
+  switch (type) {
+    case "number":
+      validateNumber(value);
+      break;
+    case "text":
+      validateText(value);
+      break;
+  }
+}
+function validateNumber(value) {}
+function validateText(value) {}

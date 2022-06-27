@@ -1,11 +1,9 @@
-import { getHex, isDualColor } from "../utils.js";
+import { getHex, isDualColor } from "./utils.js";
 
 const letter = {};
 
-export default function (props) {
+function initPreview(objectSvg, props) {
   const body = document.body;
-  const objectSvg = document.getElementById("letter");
-  console.log(objectSvg);
 
   objectSvg.onload = () => {
     const letterDoc = objectSvg.getSVGDocument();
@@ -55,12 +53,11 @@ let animationsRGB = {};
 export function toggleLight(elemName, color, isLight = false, isBright) {
   const rgb = color.rgb;
 
-  if (color.name === "RGB" && !rgb)
-    isLight
-      ? elemName === "backLight"
-        ? (animationsRGB[elemName] = animateRGB(elemName, 0.5))
-        : (animationsRGB[elemName] = animateRGB(elemName, 0.2))
-      : animationsRGB[elemName].cancel();
+  if (color.name === "RGB" && !rgb && isLight)
+    elemName === "backLight"
+      ? (animationsRGB[elemName] = animateRGB(elemName, 0.5))
+      : (animationsRGB[elemName] = animateRGB(elemName, 0.2));
+  else animationsRGB[elemName] ? animationsRGB[elemName].cancel() : "";
 
   letter[elemName].style.fill =
     isLight && rgb
@@ -85,3 +82,5 @@ function animateRGB(elemName, opacity = 1) {
     }
   );
 }
+
+export default initPreview;

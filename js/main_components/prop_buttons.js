@@ -1,6 +1,11 @@
 import { showModalActionBtns } from "./modal.js";
-import { changeLetterColor, toggleLight } from "./preview.js";
-import { getHex, isDualColor, setContrastText } from "../utils.js";
+import { changeLetterColor, toggleLight } from "../preview.js";
+import {
+  getHex,
+  isDualColor,
+  setContrastText,
+  stylizeTextElem,
+} from "../utils.js";
 import { switchWindow } from "../script.js";
 
 const body = document.body;
@@ -26,6 +31,10 @@ function initPropButtons(props) {
     if (btn.parentElement.classList.contains("prop-light")) {
       const lightColor = props[prop].color;
       const render = () => {
+        // Сброс стилей
+        btn.style.backgroundColor = "";
+        btn.classList.remove("black-text");
+
         const isLongLabel = lightColor.name.length > 8;
 
         isLongLabel
@@ -40,10 +49,17 @@ function initPropButtons(props) {
 
         const rgb = lightColor.rgb;
 
-        if (!rgb || lightColor.id < 4) return;
+        !rgb && props[prop].isOn
+          ? btn.classList.add("rgb")
+          : btn.classList.remove("rgb");
+
+        if (!rgb || !props[prop].isOn) return;
 
         btn.style.backgroundColor = "#" + getHex(rgb);
         btn.classList.add(setContrastText(rgb));
+
+        if (lightColor.id < 4)
+          btn.firstElementChild.style.backgroundColor = "#7c787d";
       };
       render();
 
@@ -54,9 +70,12 @@ function initPropButtons(props) {
 
         const colorPropName = prop.replace("Light", "Color");
         const colorBtn = buttons.namedItem(colorPropName);
+        const textSign = document.getElementById("text-sign");
 
         if (colorBtn) {
           renderColorBtn(colorBtn, props[colorPropName], props[prop].isOn);
+
+          stylizeTextElem(textSign, props.font.values, props);
 
           changeLetterColor(
             prop.replace("Light", ""),

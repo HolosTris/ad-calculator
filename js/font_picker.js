@@ -48,6 +48,7 @@ export default function (props) {
       // choosingProp.color = color;
       // choosingProp.isOn = true;
       curFont.id = font.id;
+      curFont.values = font;
       curFont.isItalic = isItalic;
 
       switchWindow("main");

@@ -60,7 +60,7 @@
 </header>
 <main>
   <section class="param">
-    <div class="param-con">
+    <div class="param-con param-text">
       <label for="text-sign">текст вывески</label>
       <input
         type="text"
@@ -91,11 +91,23 @@
     </div>
     <div class="param-con">
       <label for="signHeight">высота вывески, м</label>
-      <input type="text" name="signHeight" id="" class="mini inp-number" />
+      <input
+        type="text"
+        name="signHeight"
+        id=""
+        class="mini inp-number"
+        disabled
+      />
     </div>
     <div class="param-con">
       <label for="signWidth">ширина вывески, м</label>
-      <input type="text" name="signWidth" id="" class="mini inp-number" />
+      <input
+        type="text"
+        name="signWidth"
+        id=""
+        class="mini inp-number"
+        disabled
+      />
     </div>
     <div class="param-con">
       <label for="mountHeight">высота установки, м</label>
@@ -117,9 +129,12 @@
     </div>
     <div class="render">
       <div class="render-preview">
-        <object id="letter" type="image/svg+xml" data="./svg/letter/letter.svg">
-          <!-- <img src="picture.png" /> -->
-        </object>
+        <object
+          id="letter"
+          type="image/svg+xml"
+          data="./svg/letter/letter.svg"
+        ></object>
+        <span>реальные цвета могут отличаться</span>
       </div>
       <div class="render-props">
         <div class="prop prop-color">
@@ -143,11 +158,6 @@
         <div class="prop prop-light">
           <span>засветка</span>
           <button name="sideLight">
-            <!-- <img
-              style="mask-image: image(url(./svg/light_gray.svg), white)"
-              src="./svg/light_gray.svg"
-              alt=""
-            /> -->
             <div class="light-img"></div>
             <span class="label">белая</span>
           </button>
@@ -196,7 +206,9 @@
       <div class="wrapper">
         <button>получить промокод</button>
       </div>
-      <div class="wrapper"></div>
+      <div class="wrapper">
+        <button>заказать фотомонтаж</button>
+      </div>
     </div>
   </section>
 </main>
