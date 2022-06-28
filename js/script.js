@@ -10,8 +10,8 @@ const props = {
   textSign: "",
   font: { id: 1, values: undefined, isItalic: false },
   textHeight: 0.3,
-  signHeight: 1,
-  signWidth: 2,
+  signHeight: 0,
+  signWidth: 0,
   mountHeight: 4,
   faceColor: { id: "641-0", color: null, palette: null },
   faceLight: { id: 1, color: null, isOn: false },
@@ -22,7 +22,7 @@ const props = {
   windows: {},
   palettes: {},
   fonts: [],
-  isWelcomed: true,
+  isWelcomed: false,
 };
 
 initApp();

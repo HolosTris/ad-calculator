@@ -62,13 +62,15 @@
   <section class="param">
     <div class="param-con param-text">
       <label for="text-sign">текст вывески</label>
-      <input
+      <textarea
         type="text"
         name="textSign"
         id="text-sign"
         class="large"
         autocomplete="off"
-      />
+        autofocus
+        maxlength="100"
+      ></textarea>
     </div>
 
     <hr />
@@ -219,3 +221,5 @@
     <h1>Рекламный калькулятор</h1>
   </div>
 </footer>
+
+<span id="invisible-span"></span>

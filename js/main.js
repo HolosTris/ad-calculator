@@ -34,20 +34,24 @@ function initWelcome(props) {
     titleElem.style.display = "block";
     welcomeElem.style.display = "none";
 
-    const textSignElem = document.getElementById("text-sign");
-    const focusTextSign = (ev) => {
-      textSignElem.focus();
+    // const textSignElem = document.getElementById("text-sign");
+    // const focusTextSign = (ev) => {
+    //   textSignElem.focus();
 
-      body.removeEventListener("pointerup", focusTextSign);
-    };
-    body.addEventListener("pointerup", focusTextSign);
+    //   body.removeEventListener("pointerup", focusTextSign);
+    // };
+    // body.addEventListener("pointerup", focusTextSign);
+
+    randomizeProps(props);
 
     body.removeEventListener("pointerdown", hideWelcome);
+
+    props.isWelcomed = true;
+
+    switchWindow("main");
   };
 
   body.addEventListener("pointerdown", hideWelcome);
-
-  props.isWelcomed = true;
 }
 
 function initActionButtons(props) {
@@ -55,6 +59,51 @@ function initActionButtons(props) {
   const actionBtns = actionsELem.getElementsByTagName("button");
 
   actionBtns.namedItem("addToBasket").onclick = () => addToBasket(props);
+}
+
+function randomizeProps(props) {
+  const colorPropNames = ["faceColor", "sideColor"];
+  for (let propName of colorPropNames) {
+    const paletteName = Math.round(Math.random())
+      ? "palette641"
+      : "palette8500";
+    const color =
+      props.palettes[paletteName].colors[
+        Math.floor(Math.random() * props.palettes[paletteName].colors.length)
+      ];
+    props[propName].id = paletteName.replace("palette", "") + "-" + color.id;
+    props[propName].color = color;
+    props[propName].palette = props.palettes[paletteName];
+  }
+
+  const lightPropNames = ["faceLight", "sideLight", "backLight"];
+  for (let propName of lightPropNames) {
+    const color =
+      props.palettes.lightColors.colors[
+        Math.floor(Math.random() * props.palettes.lightColors.colors.length)
+      ];
+    props[propName].id = color.id;
+    props[propName].color = color;
+    props[propName].isOn = Math.round(Math.random());
+  }
+
+  props.isHighBrightness = Math.round(Math.random());
+
+  // textSign: "",
+  // font: { id: 1, values: undefined, isItalic: false },
+  // textHeight: 0.3,
+  // signHeight: 0,
+  // signWidth: 0,
+  // mountHeight: 4,
+  // faceColor: { id: "641-0", color: null, palette: null },
+  // faceLight: { id: 1, color: null, isOn: false },
+  // sideColor: { id: "641-0", color: null, palette: null },
+  // sideLight: { id: 1, color: null, isOn: false },
+  // backLight: { id: 1, color: null, isOn: true },
+  // isHighBrightness: false,
+  // windows: {},
+  // palettes: {},
+  // fonts: [],
 }
 
 function addToBasket(props) {

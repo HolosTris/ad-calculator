@@ -43,7 +43,8 @@ button:hover {
 }
 
 /* Input */
-input {
+input,
+textarea {
   height: 26px;
   width: 100%;
   background: none;
@@ -52,13 +53,19 @@ input {
   color: #fff;
   font-size: 17px;
   text-align: center;
+  line-height: 1.2;
 }
-input:focus {
+textarea {
+  overflow: hidden;
+  resize: none;
+}
+input:focus,
+textarea:focus {
   outline: none;
   border-color: #fff;
 }
-input.large {
-  height: 60px;
+textarea.large {
+  min-height: 1.2em;
   border: none;
   border-radius: 0;
   font-size: 52px;

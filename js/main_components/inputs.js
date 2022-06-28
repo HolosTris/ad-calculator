@@ -5,6 +5,49 @@ const body = document.body;
 
 function initInputs(props) {
   const inputs = body.getElementsByTagName("input");
+  const textSignElem = document.getElementById("text-sign");
+
+  textSignElem.value = props.textSign;
+
+  let numRows = 0;
+
+  stylizeTextElem(textSignElem, props.font.values, props);
+
+  const extendTextSign = () => {
+    textSignElem.labels[0].style.display = "none";
+    textSignElem.parentElement.classList.add("extended-con");
+  };
+
+  if (textSignElem.value) extendTextSign();
+  textSignElem.oninput = extendTextSign;
+
+  const invisibleSpan = document.getElementById("invisible-span");
+
+  invisibleSpan.style.position = "fixed";
+  invisibleSpan.style.visibility = "hidden";
+
+  textSignElem.addEventListener("input", () => {
+    let value = textSignElem.value;
+
+    textSignElem.style.height = textSignElem.style.minHeight;
+
+    const lineHeight = parseInt(getComputedStyle(textSignElem).lineHeight);
+    const textHeight = textSignElem.scrollHeight;
+
+    numRows = textHeight / lineHeight;
+
+    textSignElem.style.height = lineHeight * numRows + "px";
+
+    props.textSign = value;
+
+    invisibleSpan.style.fontSize = getComputedStyle(textSignElem).fontSize;
+    invisibleSpan.style.maxWidth = getComputedStyle(textSignElem).width;
+    stylizeTextElem(invisibleSpan, props.font.values, props);
+
+    invisibleSpan.textContent = value;
+
+    updateSignParams();
+  });
 
   for (let prop in props) {
     const inp = inputs.namedItem(prop);
@@ -13,7 +56,6 @@ function initInputs(props) {
 
     if (inp.name === "font") {
       const font = props.fonts.find((el) => props.font.id === el.id);
-      const textSignElem = inputs.namedItem("textSign");
 
       if (!document.querySelector(`link[href='${font.path}']`))
         document.head.insertAdjacentHTML(
@@ -24,16 +66,6 @@ function initInputs(props) {
       inp.style.fontFamily = font.family;
       inp.style.fontWeight = font.weight;
       inp.style.fontStyle = props.font.isItalic ? "italic" : "normal";
-
-      stylizeTextElem(textSignElem, font, props);
-
-      const extendTextSign = () => {
-        textSignElem.labels[0].style.display = "none";
-        textSignElem.parentElement.classList.add("extended-con");
-      };
-
-      if (textSignElem.value) extendTextSign();
-      textSignElem.oninput = extendTextSign;
 
       inp.value = getNameFont(font);
 
@@ -54,21 +86,13 @@ function initInputs(props) {
         inp.value = multiplier ? props[prop] * multiplier : props[prop];
 
         updateReadability();
+        updateSignParams();
       };
     }
-
-    // {
-    //   inp.value = props[prop];
-
-    //   inp.onchange = () => {
-    //     let value = inp.value;
-
-    //     props[prop] = value;
-    //   };
-    // }
   }
 
   updateReadability();
+  updateSignParams();
 
   function updateReadability() {
     const distElem = body.getElementsByClassName("param-distance")[0];
@@ -86,6 +110,38 @@ function initInputs(props) {
       ? Math.floor(metersReadability / 0.71)
       : "0";
   }
+
+  function updateSignParams() {
+    updateSignHeight();
+    updateSignWidth();
+  }
+
+  function updateSignHeight() {
+    const elem = inputs.namedItem("signHeight");
+
+    const height = props.textHeight * numRows;
+
+    elem.value = Number.isInteger(height) ? height : height.toFixed(2);
+  }
+
+  function updateSignWidth() {
+    const elem = inputs.namedItem("signWidth");
+
+    const signFontSizePx = parseInt(getComputedStyle(textSignElem).fontSize);
+    const signWidthPx = parseInt(getComputedStyle(invisibleSpan).width);
+
+    const width = (props.textHeight / signFontSizePx) * signWidthPx;
+
+    elem.value = Number.isInteger(width) ? width : width.toFixed(2);
+  }
 }
+
+// function calculateHeightSign(textHeight, textLength) {
+//   return textHeight * textLength;
+// }
+
+// function calculateWidthSign() {
+//   return textHeight * 0.666 * textLength;
+// }
 
 export default initInputs;
