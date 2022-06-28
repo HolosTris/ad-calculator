@@ -13,6 +13,10 @@ function initPreview(objectSvg, props) {
     letter.faceLight = letterDoc.getElementById("faceLight");
     letter.sideLight = letterDoc.getElementById("sideLight");
     letter.backLight = letterDoc.getElementById("backLight");
+    letter.shadows = [
+      letterDoc.getElementById("shadow"),
+      letterDoc.getElementById("shadowStripes"),
+    ];
 
     const isFaceLight = props.faceLight.isOn;
     const faceLightColor = props.faceLight.color;
@@ -65,6 +69,12 @@ export function toggleLight(elemName, color, isLight = false, isBright) {
         ? `rgba(${rgb}, ${0.5 * (isBright + 1)})`
         : `rgba(${rgb}, ${0.15 * (isBright + 1)})`
       : "transparent";
+
+  if (elemName === "sideLight")
+    letter.shadows[1].style.opacity = isLight ? 0 : 0.3;
+  // isLight
+  //   ? letter.shadows.forEach((elem) => (elem.style.opacity = 0))
+  //   : letter.shadows.forEach((elem) => (elem.style.opacity = 0.3));
 }
 
 function animateRGB(elemName, opacity = 1) {

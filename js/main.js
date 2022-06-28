@@ -34,14 +34,6 @@ function initWelcome(props) {
     titleElem.style.display = "block";
     welcomeElem.style.display = "none";
 
-    // const textSignElem = document.getElementById("text-sign");
-    // const focusTextSign = (ev) => {
-    //   textSignElem.focus();
-
-    //   body.removeEventListener("pointerup", focusTextSign);
-    // };
-    // body.addEventListener("pointerup", focusTextSign);
-
     randomizeProps(props);
 
     body.removeEventListener("pointerdown", hideWelcome);
@@ -77,33 +69,22 @@ function randomizeProps(props) {
   }
 
   const lightPropNames = ["faceLight", "sideLight", "backLight"];
+  const colors = new Array(2).fill(
+    props.palettes.lightColors.colors[
+      Math.floor(Math.random() * props.palettes.lightColors.colors.length)
+    ],
+    0,
+    2
+  );
+
   for (let propName of lightPropNames) {
-    const color =
-      props.palettes.lightColors.colors[
-        Math.floor(Math.random() * props.palettes.lightColors.colors.length)
-      ];
-    props[propName].id = color.id;
-    props[propName].color = color;
+    const numColor = propName !== "backLight" ? 0 : 1;
+    props[propName].id = colors[numColor].id;
+    props[propName].color = colors[numColor];
     props[propName].isOn = Math.round(Math.random());
   }
 
   props.isHighBrightness = Math.round(Math.random());
-
-  // textSign: "",
-  // font: { id: 1, values: undefined, isItalic: false },
-  // textHeight: 0.3,
-  // signHeight: 0,
-  // signWidth: 0,
-  // mountHeight: 4,
-  // faceColor: { id: "641-0", color: null, palette: null },
-  // faceLight: { id: 1, color: null, isOn: false },
-  // sideColor: { id: "641-0", color: null, palette: null },
-  // sideLight: { id: 1, color: null, isOn: false },
-  // backLight: { id: 1, color: null, isOn: true },
-  // isHighBrightness: false,
-  // windows: {},
-  // palettes: {},
-  // fonts: [],
 }
 
 function addToBasket(props) {

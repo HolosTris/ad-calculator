@@ -194,13 +194,24 @@ label {
   color: #7c787d;
   margin-top: 5px;
 }
-.prop button,
-.prop input[type="button"] {
+.prop > button,
+.prop > input[type="button"] {
+  position: relative;
   width: 72px;
   height: 72px;
   text-align: center;
   background-color: #1a1a1a;
   /* touch-action: none; */
+}
+.extra-btn {
+  position: absolute;
+  width: 72px;
+  padding: 4px;
+  margin: 0 -8px;
+  bottom: -2px;
+}
+.extra-btn:hover {
+  border-color: #fff;
 }
 .light-img {
   width: 100%;

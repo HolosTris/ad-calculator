@@ -1,6 +1,7 @@
 import { showModalActionBtns } from "./modal.js";
 import { changeLetterColor, toggleLight } from "../preview.js";
 import {
+  findSimilarColor,
   getHex,
   isDualColor,
   setContrastText,
@@ -132,19 +133,47 @@ function initPropButtons(props) {
       };
     }
   }
+
+  // onclick for extra buttons
+
+  function renderColorBtn(btn, colorProp, isLight) {
+    const color = colorProp.color;
+    const rgb = color.rgb
+      ? isDualColor(color)
+        ? color.rgb[+isLight]
+        : color.rgb
+      : null;
+
+    btn.style.backgroundColor = rgb ? "#" + getHex(rgb) : "#fff";
+    btn.classList.add(setContrastText(rgb ? rgb : [255, 255, 255]));
+
+    const btnSpan = btn.firstElementChild;
+
+    btnSpan.innerText = `${colorProp.id}\n ${color.name}`;
+
+    if (btn.classList.contains("extra-btn")) {
+      btnSpan.innerText = colorProp.id;
+      return;
+    }
+
+    const extraBtn = btn.lastElementChild;
+
+    if (
+      props.faceColor.palette !== props.sideColor.palette &&
+      colorProp.palette === props.palettes.palette641
+    ) {
+      const palId =
+        colorProp.palette === props.palettes.palette641 ? "8500" : "641";
+      const extraColor = findSimilarColor(
+        color,
+        props.palettes["palette" + palId]
+      );
+      const colorObj = {
+        id: palId + "-" + extraColor.id,
+        color: extraColor,
+      };
+      renderColorBtn(extraBtn, colorObj, isLight);
+    } else extraBtn.style.display = "none";
+  }
 }
-
-function renderColorBtn(btn, colorProp, lightProp) {
-  const color = colorProp.color;
-  const rgb = color.rgb
-    ? isDualColor(color)
-      ? color.rgb[+lightProp]
-      : color.rgb
-    : null;
-
-  btn.innerText = `${colorProp.id}\n ${color.name}`;
-  btn.style.backgroundColor = rgb ? "#" + getHex(rgb) : "#fff";
-  btn.classList.add(setContrastText(rgb ? rgb : [255, 255, 255]));
-}
-
 export default initPropButtons;

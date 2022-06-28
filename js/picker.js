@@ -81,17 +81,22 @@ export default function (
       ${color.pantone ? "PANTONE " + color.pantone : ""}<br />
       ${color.tikkurila ? "TIKKURILA " + color.tikkurila : ""}`;
 
-    btn.onclick = (ev) => {
+    btn.onclick = () => {
       const choosingProp = props[choosingPropName];
 
       choosingProp.id = palId + "-" + color.id;
       choosingProp.palette = palette;
       choosingProp.color = color;
 
-      ev.stopPropagation();
       switchWindow("main");
     };
 
     return btn;
   }
 }
+
+// export function pickColor (colorProp) {
+//   colorProp.id = palId + "-" + color.id;
+//   colorProp.palette = palette;
+//   colorProp.color = color;
+// }
