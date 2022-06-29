@@ -19,10 +19,12 @@ const props = {
   sideLight: { id: 1, color: null, isOn: false },
   backLight: { id: 1, color: null, isOn: true },
   isHighBrightness: false,
+  filmType: "none", //glossy | matt | none
   windows: {},
   palettes: {},
   fonts: [],
   isWelcomed: false,
+  scenario: { isPlay: false, turn: 0, turnsList: [] },
 };
 
 initApp();
@@ -138,6 +140,18 @@ function initLightColor(colorProp) {
 
 export function initFont(font) {
   font.values = props.fonts.find((el) => font.id === el.id);
+}
+
+export function setScenario(turnsList) {
+  props.scenario.isPlay = true;
+  props.scenario.turn = 0;
+  props.scenario.turnsList = turnsList;
+}
+
+export function playScenario() {
+  const scenario = props.scenario;
+  scenario.turnsList[scenario.turn++]();
+  scenario.isPlay = scenario.turn < scenario.turnsList.length;
 }
 
 // function capitalize(str) {

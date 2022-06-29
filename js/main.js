@@ -8,7 +8,7 @@ import initInputs from "./main_components/inputs.js";
 
 const body = document.body;
 
-function initMain(props) {
+function initMain(props, isModalOn = false) {
   const objectSvg = document.getElementById("letter");
 
   initHeader();
@@ -101,6 +101,7 @@ function addToBasket(props) {
     sideLight: props.sideLight,
     backLight: props.backLight,
     isHighBrightness: props.isHighBrightness,
+    filmType: props.filmType,
     timestamp: Date.now(),
   };
 

@@ -1,4 +1,4 @@
-import { switchWindow } from "./script.js";
+import { playScenario, setScenario, switchWindow } from "./script.js";
 import { isDualColor, getHex, setContrastText, isBright } from "./utils.js";
 
 export default function (props, choosingPropName = "faceLight") {
@@ -32,12 +32,13 @@ export default function (props, choosingPropName = "faceLight") {
     btn.className = `color-con`;
 
     btn.innerHTML = `
-      <div class="btn info-color" style="background-color:${
-        hex ? "#" + hex : "none"
-      }">
+      <div class="btn info-color ${
+        !hex && color.name != "без засветки" ? "rgb" : ""
+      }" style="background-color:${hex ? "#" + hex : "none"}">
       <div class="intersections-img ${isBright(rgb) ? "inverted" : ""}"></div>
       <span class="${setContrastText(rgb)}">${
-      color.name + (color.name === "RGB" ? " (меняет цвет)" : "")
+      color.name
+      // + (color.name === "RGB" ? " (меняет цвет)" : "")
     }</span>
       </div>
       <div class="pick-indicator btn ${isPicked ? "active" : ""}">
@@ -58,6 +59,27 @@ export default function (props, choosingPropName = "faceLight") {
 
         props["sideLight"].id = color.id;
         props["sideLight"].color = color;
+      }
+
+      if (!color.id) {
+        props["faceLight"].isOn = false;
+        props["sideLight"].isOn = false;
+        setScenario([
+          () =>
+            switchWindow("picker", [
+              choosingPropName.replace("Light", "Color"),
+              "641",
+            ]),
+          () => {
+            switchWindow("main");
+            body.classList.add("modal-active");
+          },
+        ]);
+      }
+
+      if (props.scenario.isPlay) {
+        playScenario();
+        return;
       }
 
       switchWindow("main");

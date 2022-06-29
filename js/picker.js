@@ -1,4 +1,4 @@
-import { switchWindow } from "./script.js";
+import { playScenario, switchWindow } from "./script.js";
 import { isDualColor, getHex, setContrastText } from "./utils.js";
 
 export default function (
@@ -10,15 +10,47 @@ export default function (
   const body = document.body;
   body.setAttribute("choosing", choosingPropName);
 
+  const titleToggle = document.getElementsByClassName("title-toggle")[0];
+
+  if (palId != "641") {
+    titleToggle.innerHTML = "<h2>Палитра плёнок</h2>";
+    props.filmType = "none";
+  } else {
+    const titleToggleBtn = titleToggle.getElementsByTagName("button")[0];
+
+    props.filmType = "matt";
+
+    const turnBtn = () => {
+      if (props.filmType === "glossy") {
+        titleToggleBtn.classList.add("alter");
+        titleToggleBtn.textContent = "глянцевый";
+      } else {
+        titleToggleBtn.classList.remove("alter");
+        titleToggleBtn.textContent = "матовый";
+      }
+    };
+
+    turnBtn();
+
+    titleToggleBtn.onclick = () => {
+      props.filmType === "glossy"
+        ? (props.filmType = "matt")
+        : (props.filmType = "glossy");
+
+      turnBtn();
+    };
+  }
+
   const colorsList = document.getElementsByClassName("colors-list")[0];
   colorsList.setAttribute("palette", "palette" + palId);
 
   const lightIndicator = document.getElementsByClassName("light-indicator")[0];
-  isLightOn && lightIndicator.classList.add("light-on");
+  isLightOn && body.classList.add("light-on");
+  const lightIndBtn = lightIndicator.lastElementChild;
 
   const palette = props.palettes["palette" + palId];
 
-  lightIndicator.onclick = () => {
+  lightIndBtn.onclick = () => {
     body.classList.toggle("light-on");
     fillList(palette.colors);
   };
@@ -87,6 +119,11 @@ export default function (
       choosingProp.id = palId + "-" + color.id;
       choosingProp.palette = palette;
       choosingProp.color = color;
+
+      if (props.scenario.isPlay) {
+        playScenario();
+        return;
+      }
 
       switchWindow("main");
     };

@@ -44,15 +44,15 @@ export function findSimilarColor(color, palette) {
 
     const curRGB = isDualColor(curCol) ? curCol.rgb[0] : curCol.rgb;
     const [simR, simG, simB] = curRGB.map(
-      (val, i) => Math.abs(val - rgb[i])
+      (val, i) => 1 - Math.abs(val - rgb[i]) / 255
       // invlerp(val, 255, rgb[i])
     );
 
-    return { color: curCol, similarity: simR + simG + simB };
+    return { color: curCol, similarity: (simR + simG + simB) / 3 };
   });
   const closestSimilarity = findClosestNum(
     comparedColors.map((item) => item.similarity),
-    0
+    1
   );
   console.log(closestSimilarity);
 
