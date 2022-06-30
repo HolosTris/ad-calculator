@@ -50,10 +50,7 @@ export default function (props, choosingPropName = "faceLight") {
       choosingProp.color = color;
       choosingProp.isOn = true;
 
-      if (
-        choosingPropName === "faceLight" ||
-        choosingPropName === "sideLight"
-      ) {
+      if (choosingPropName != "backLight" && color.id) {
         props["faceLight"].id = color.id;
         props["faceLight"].color = color;
 
@@ -61,9 +58,8 @@ export default function (props, choosingPropName = "faceLight") {
         props["sideLight"].color = color;
       }
 
-      if (!color.id) {
-        props["faceLight"].isOn = false;
-        props["sideLight"].isOn = false;
+      if (!color.id) choosingProp.isOn = false;
+      if (!color.id && choosingPropName != "backLight") {
         setScenario([
           () =>
             switchWindow("picker", [

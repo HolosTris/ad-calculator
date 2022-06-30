@@ -1,5 +1,10 @@
 import { switchWindow } from "../script.js";
-import { findSimilarColor, getHex } from "../utils.js";
+import {
+  calculateSimilarityColors,
+  findSimilarColor,
+  getHex,
+  getRgb,
+} from "../utils.js";
 
 const body = document.body;
 
@@ -76,10 +81,17 @@ function createModalActionBtn(
   withIcon,
   withLight = false
 ) {
-  const btn = document.createElement("button");
+  const btn = document.createElement("div");
   const elemLetter = choosingProp.replace("Color", "");
 
-  btn.className = `pick-color ${withLight ? "with-ligth" : ""}`;
+  const btnTextColor = withLight ? "fff" : "7c787d";
+  // console.log(calculateSimilarityColors(color.rgb, getRgb(btnTextColor)));
+
+  btn.className = `btn pick-color ${withLight ? "with-ligth" : ""} ${
+    calculateSimilarityColors(color.rgb, getRgb(btnTextColor)) > 0.9
+      ? "black-text"
+      : ""
+  }`;
   btn.style.backgroundColor = color.rgb
     ? "#" + (withIcon ? getHex(color.rgb[+withLight]) : getHex(color.rgb))
     : "#fff";
@@ -107,10 +119,9 @@ function createModalActionBtn(
       </p>
     </div>`;
 
-  btn.onclick = (ev) => {
-    ev.stopPropagation();
-    switchWindow("picker", [choosingProp, palId, withLight]);
-  };
+  // btn.onclick = (ev) => {
+  //   ev.stopPropagation();
+  // };
 
   return btn;
 }

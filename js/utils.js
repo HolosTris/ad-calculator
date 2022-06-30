@@ -24,6 +24,17 @@ export function getHex(rgb) {
     .join("");
 }
 
+export function getRgb(hex) {
+  if (hex.length === 3)
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+
+  return [
+    parseInt(hex.slice(0, 2), 16),
+    parseInt(hex.slice(2, 4), 16),
+    parseInt(hex.slice(4, 6), 16),
+  ];
+}
+
 export function isDualColor(color) {
   return Array.isArray(color.rgb[0]);
 }
@@ -40,15 +51,13 @@ export function findSimilarColor(color, palette) {
 
   const rgb = isDualColor(color) ? color.rgb[0] : color.rgb;
   const comparedColors = palette.colors.map((curCol) => {
-    if (!curCol.rgb) return { color: curCol, similarity: Infinity };
+    const curRGB =
+      curCol.rgb && isDualColor(curCol) ? curCol.rgb[0] : curCol.rgb;
 
-    const curRGB = isDualColor(curCol) ? curCol.rgb[0] : curCol.rgb;
-    const [simR, simG, simB] = curRGB.map(
-      (val, i) => 1 - Math.abs(val - rgb[i]) / 255
-      // invlerp(val, 255, rgb[i])
-    );
-
-    return { color: curCol, similarity: (simR + simG + simB) / 3 };
+    return {
+      color: curCol,
+      similarity: calculateSimilarityColors(rgb, curRGB),
+    };
   });
   const closestSimilarity = findClosestNum(
     comparedColors.map((item) => item.similarity),
@@ -62,6 +71,17 @@ export function findSimilarColor(color, palette) {
   console.log(similarColor);
 
   return similarColor;
+}
+
+export function calculateSimilarityColors(rgb1, rgb2) {
+  if (!rgb1 || !rgb2) return 0;
+
+  const [simR, simG, simB] = rgb1.map(
+    (val, i) => 1 - Math.abs(val - rgb2[i]) / 255
+    // invlerp(val, 255, rgb[i])
+  );
+
+  return (simR + simG + simB) / 3;
 }
 
 export function toCamelCase(text = "", separator = "_") {
@@ -110,6 +130,21 @@ export function stylizeTextElem(textElem, font, props) {
       ? "none"
       : "-1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff";
   }
+}
+
+export function getTextSize(text, font) {
+  const element = document.createElement("canvas");
+  const ctx = element.getContext("2d");
+  ctx.font = font;
+  const metrics = ctx.measureText(text);
+  const textSize = {
+    width: metrics.width,
+    fontHeight: metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent,
+    actualHeight:
+      metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent,
+  };
+
+  return textSize;
 }
 
 export function validate(value, type = "number") {

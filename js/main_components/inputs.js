@@ -1,5 +1,5 @@
 import { switchWindow } from "../script.js";
-import { getNameFont, stylizeTextElem } from "../utils.js";
+import { getNameFont, getTextSize, stylizeTextElem } from "../utils.js";
 
 const body = document.body;
 
@@ -25,6 +25,7 @@ function initInputs(props) {
 
   invisibleSpan.style.position = "fixed";
   invisibleSpan.style.visibility = "hidden";
+  // invisibleSpan.style.lineHeight = "auto";
 
   textSignElem.addEventListener("input", () => {
     let value = textSignElem.value;
@@ -41,7 +42,7 @@ function initInputs(props) {
     props.textSign = value;
 
     invisibleSpan.style.fontSize = getComputedStyle(textSignElem).fontSize;
-    invisibleSpan.style.maxWidth = getComputedStyle(textSignElem).width;
+    // invisibleSpan.style.maxWidth = getComputedStyle(textSignElem).width;
     stylizeTextElem(invisibleSpan, props.font.values, props);
 
     invisibleSpan.textContent = value;
@@ -119,7 +120,11 @@ function initInputs(props) {
   function updateSignHeight() {
     const elem = inputs.namedItem("signHeight");
 
-    const height = props.textHeight * numRows;
+    const height =
+      getTextSize(
+        textSignElem.value,
+        `${props.textHeight * 1000}px ${props.font.values.family}`
+      ).actualHeight / 1000;
 
     elem.value = Number.isInteger(height) ? height : height.toFixed(2);
   }
@@ -129,6 +134,8 @@ function initInputs(props) {
 
     const signFontSizePx = parseInt(getComputedStyle(textSignElem).fontSize);
     const signWidthPx = parseInt(getComputedStyle(invisibleSpan).width);
+
+    console.log(getComputedStyle(invisibleSpan).width);
 
     const width = (props.textHeight / signFontSizePx) * signWidthPx;
 

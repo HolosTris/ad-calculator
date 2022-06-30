@@ -8,6 +8,7 @@ import {
   stylizeTextElem,
 } from "../utils.js";
 import { playScenario, setScenario, switchWindow } from "../script.js";
+import picker from "../picker.js";
 
 const body = document.body;
 
@@ -18,23 +19,29 @@ function initPropButtons(props) {
 
   for (let propName in props) {
     const btn = buttons.namedItem(propName);
+    const prop = props[propName];
 
     if (!btn) continue;
 
     if (btn.parentElement.classList.contains("prop-color")) {
-      const lightProp = propName.replace("Color", "Light");
-      renderColorBtn(btn, props[propName], props[lightProp].isOn);
+      const lightPropName = propName.replace("Color", "Light");
+      renderColorBtn(btn, prop, props[lightPropName].isOn);
 
       btn.onclick = () => {
-        body.classList.add("modal-active");
-        showModalActionBtns(props);
+        switchWindow("picker", [
+          propName,
+          prop.id.slice(0, prop.id.indexOf("-")),
+          props[lightPropName].isOn,
+        ]);
+        // body.classList.add("modal-active");
+        // showModalActionBtns(props);
       };
     }
 
     if (btn.parentElement.classList.contains("prop-light")) {
-      const lightColor = props[propName].color;
+      const lightColor = prop.color;
 
-      renderLightBtn(btn, props[propName]);
+      renderLightBtn(btn, prop);
 
       btn.onclick = () => {
         const btnLabelText = btn.lastElementChild.textContent;
@@ -58,9 +65,9 @@ function initPropButtons(props) {
             setScenario(scenarioTurns);
           } else switchWindow("lightPicker", [propName]);
 
-        props[propName].isOn = !props[propName].isOn;
+        prop.isOn = !prop.isOn;
 
-        renderLightBtn(btn, props[propName]);
+        renderLightBtn(btn, prop);
 
         const colorPropName = propName.replace("Light", "Color");
         const colorBtn = buttons.namedItem(colorPropName);
@@ -68,23 +75,18 @@ function initPropButtons(props) {
         if (colorBtn) {
           const textSign = document.getElementById("text-sign");
 
-          renderColorBtn(colorBtn, props[colorPropName], props[propName].isOn);
+          renderColorBtn(colorBtn, props[colorPropName], prop.isOn);
 
           stylizeTextElem(textSign, props.font.values, props);
 
           changeLetterColor(
             propName.replace("Light", ""),
             props[colorPropName].color,
-            props[propName].isOn
+            prop.isOn
           );
         }
 
-        toggleLight(
-          propName,
-          lightColor,
-          props[propName].isOn,
-          props.isHighBrightness
-        );
+        toggleLight(propName, lightColor, prop.isOn, props.isHighBrightness);
 
         if (props.scenario.isPlay) {
           playScenario();
@@ -102,15 +104,17 @@ function initPropButtons(props) {
 
     if (btn.parentElement.classList.contains("prop-brightness")) {
       const render = () => {
-        props[propName]
-          ? btn.classList.add("active")
-          : btn.classList.remove("active");
+        btn.disabled =
+          !props.faceLight.id && !props.sideLight.id && !props.backLight.id
+            ? true
+            : false;
+        prop ? btn.classList.add("active") : btn.classList.remove("active");
       };
 
       render();
 
       btn.onclick = () => {
-        props[propName] = !props[propName];
+        prop = !prop;
 
         render();
 
@@ -171,7 +175,8 @@ function initPropButtons(props) {
     const color = colorProp.color;
     const rgb = color.rgb
       ? isDualColor(color)
-        ? color.rgb[+isLight]
+        ? //color.rgb[+isLight]
+          color.rgb[0]
         : color.rgb
       : null;
 
@@ -196,7 +201,10 @@ function initPropButtons(props) {
       const palId =
         colorProp.palette === props.palettes.palette641 ? "8500" : "641";
       const palette = props.palettes["palette" + palId];
-      const extraColor = findSimilarColor(color, palette);
+      const extraColor =
+        props.faceColor === colorProp
+          ? props.sideColor.color
+          : props.faceColor.color;
       const colorObj = {
         id: palId + "-" + extraColor.id,
         color: extraColor,
@@ -236,17 +244,21 @@ function initPropButtons(props) {
       ? btn.classList.add("long-label")
       : btn.classList.remove("long-label");
 
-    !rgb && lightColor.id != 0 && lightProp.isOn
+    !rgb && lightColor.id != 0
       ? btn.classList.add("rgb")
       : btn.classList.remove("rgb");
 
-    if (!rgb || !lightProp.isOn) return;
+    if (!rgb) return;
 
-    btn.style.backgroundColor = "#" + getHex(rgb);
-    btn.classList.add(setContrastText(rgb));
+    if (lightProp.isOn) {
+      btn.style.backgroundColor = "#" + getHex(rgb);
+      btn.classList.add(setContrastText(rgb));
 
-    if (lightColor.id < 4)
-      btn.firstElementChild.style.backgroundColor = "#7c787d";
+      if (lightColor.id < 4)
+        btn.firstElementChild.style.backgroundColor = "#7c787d";
+    } else {
+      btn.style.borderColor = "#" + getHex(rgb);
+    }
   }
 
   function setLabelBtn(btn, colorName) {

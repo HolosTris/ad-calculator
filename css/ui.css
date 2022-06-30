@@ -69,6 +69,8 @@ textarea.large {
   border: none;
   border-radius: 0;
   font-size: 52px;
+  caret-color: #fff;
+  /* margin: 8px; */
 }
 input.mini {
   width: 60px;

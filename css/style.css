@@ -125,7 +125,15 @@ main {
   margin-right: 15px;
 }
 .param-text {
-  margin-bottom: -8px;
+  position: relative;
+  /* align-items: flex-end; */
+  margin-bottom: 2px;
+}
+.param-text label {
+  position: absolute;
+  bottom: -2px;
+  line-height: 1;
+  /* align-self: flex-end; */
 }
 .param-font {
   margin-bottom: 10px;
@@ -227,6 +235,12 @@ label {
 .prop .active .light-img {
   background-color: #fff;
 }
+.prop :disabled {
+  background-color: #000;
+}
+.prop :disabled .light-img {
+  background-color: #222;
+}
 .prop-color {
   color: #fff;
 }
@@ -317,6 +331,7 @@ body.modal-active .modal {
   font-family: Inter, sans-serif;
   font-size: 17px;
   color: #7c787d;
+  text-align: center;
 }
 .pick-color .name {
   font-weight: 700;
@@ -341,6 +356,9 @@ body.modal-active .modal {
 }
 
 .rgb {
+  animation: rgbAnimationBorder 10s linear infinite;
+}
+.active.rgb {
   animation: rgbAnimation 10s linear infinite;
 }
 @keyframes rgbAnimation {
@@ -355,5 +373,19 @@ body.modal-active .modal {
   }
   100% {
     background-color: hsl(360, 100%, 50%);
+  }
+}
+@keyframes rgbAnimationBorder {
+  0% {
+    border-color: hsla(0, 100%, 50%);
+  }
+  33.3% {
+    border-color: hsl(120, 100%, 50%);
+  }
+  66.6% {
+    border-color: hsl(240, 100%, 50%);
+  }
+  100% {
+    border-color: hsl(360, 100%, 50%);
   }
 }

@@ -29,21 +29,28 @@ function initWelcome(props) {
   titleElem.style.display = "none";
   welcomeElem.style.display = "block";
 
-  const hideWelcome = () => {
+  const hideWelcome = (ev) => {
+    ev.preventDefault();
+
     paramsElems.forEach((el) => (el.style.display = "block"));
     titleElem.style.display = "block";
     welcomeElem.style.display = "none";
 
     randomizeProps(props);
 
-    body.removeEventListener("pointerdown", hideWelcome);
+    body.removeEventListener("pointerup", hideWelcome);
+    body.removeEventListener("pointermove", hideWelcome);
 
     props.isWelcomed = true;
 
-    switchWindow("main");
+    setTimeout(() => {
+      switchWindow("main");
+      document.getElementById("text-sign").focus();
+    }, 0);
   };
 
-  body.addEventListener("pointerdown", hideWelcome);
+  body.addEventListener("pointerup", hideWelcome);
+  body.addEventListener("pointermove", hideWelcome);
 }
 
 function initActionButtons(props) {
@@ -69,16 +76,18 @@ function randomizeProps(props) {
   }
 
   const lightPropNames = ["faceLight", "sideLight", "backLight"];
-  const colors = new Array(2).fill(
+  const colors = [
     props.palettes.lightColors.colors[
       Math.floor(Math.random() * props.palettes.lightColors.colors.length)
     ],
-    0,
-    2
-  );
+    props.palettes.lightColors.colors[
+      Math.floor(Math.random() * props.palettes.lightColors.colors.length)
+    ],
+  ];
 
   for (let propName of lightPropNames) {
     const numColor = propName !== "backLight" ? 0 : 1;
+    console.log(colors[numColor]);
     props[propName].id = colors[numColor].id;
     props[propName].color = colors[numColor];
     props[propName].isOn = Math.round(Math.random());

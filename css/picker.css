@@ -26,6 +26,7 @@ header section:first-child div {
 }
 
 .title-toggle button {
+  width: 88px;
   height: 24px;
   color: #7c787d;
   font-style: italic;
@@ -99,8 +100,9 @@ body.light-on .colors-list {
   height: 72px;
   font-size: 7px;
   text-align: center;
-  padding: 2px;
-  white-space: nowrap;
+  padding: 2px 0;
+  /* white-space: nowrap; */
+  line-height: 1.05;
   margin: -1px;
 }
 body.light-on .colors-list .btn {
