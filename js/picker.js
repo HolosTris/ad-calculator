@@ -1,3 +1,4 @@
+import initModal from "./picker_components/modal.js";
 import { playScenario, switchWindow } from "./script.js";
 import { isDualColor, getHex, setContrastText } from "./utils.js";
 
@@ -125,7 +126,13 @@ export default function (
         return;
       }
 
-      switchWindow("main");
+      const pickedColor = body.getElementsByClassName("is-picked")[0];
+      pickedColor && pickedColor.classList.remove("is-picked");
+      btn.classList.add("is-picked");
+
+      initModal(props);
+      body.classList.add("modal-active");
+      // switchWindow("main");
     };
 
     return btn;

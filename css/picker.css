@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   background-color: #000;
-  z-index: 1;
+  z-index: 10;
 }
 .info-header section {
   display: flex;
@@ -112,8 +112,9 @@ body.light-on .colors-list .btn {
   height: 74px;
   margin: -2px 0 0 -2px; */
 }
-.colors-list .btn.is-picked {
-  border-color: #fff;
+body .colors-list .btn.is-picked {
+  border: 2px solid #fff;
+  /* border-color: #fff; */
   z-index: 1;
 }
 .colors-list .btn:hover {

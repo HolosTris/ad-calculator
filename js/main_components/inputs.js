@@ -81,8 +81,14 @@ function initInputs(props) {
       inp.onchange = () => {
         let value = +inp.value;
 
+        value =
+          inp.name === "textHeight"
+            ? parseInt(value)
+            : parseInt(value * 10) / 10;
+
         value /= multiplier ? multiplier : 1;
-        props[prop] = value;
+
+        value ? (props[prop] = value) : (value = props[prop]);
 
         inp.value = multiplier ? props[prop] * multiplier : props[prop];
 

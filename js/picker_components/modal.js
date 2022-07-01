@@ -4,6 +4,7 @@ import {
   findSimilarColor,
   getHex,
   getRgb,
+  isDualColor,
 } from "../utils.js";
 
 const body = document.body;
@@ -11,13 +12,16 @@ const body = document.body;
 function initModal(props) {
   const modal = body.getElementsByClassName("modal")[0];
 
-  modal.onclick = (ev) => {
+  modal.onclick = (ev) =>
     modal == ev.target && body.classList.remove("modal-active");
-  };
 
-  const controlBtns = modal.querySelectorAll(".modal-controls button");
+  const btnsYes = modal.querySelectorAll(".modal-controls .btn-yes");
 
-  controlBtns.forEach(
+  btnsYes.forEach((btn) => (btn.onclick = () => switchWindow("main")));
+
+  const btnsNo = modal.querySelectorAll(".modal-controls .btn-no");
+
+  btnsNo.forEach(
     (btn) => (btn.onclick = () => body.classList.remove("modal-active"))
   );
 
@@ -30,46 +34,37 @@ export function showModalActionBtns(props) {
   const btns = [];
   let pickingColor;
 
-  if (props.faceLight.isOn) {
-    pickingColor = findSimilarColor(
-      props.faceColor.color,
-      props.palettes.palette8500
-    );
+  for (let colorProp of [props.faceColor, props.sideColor]) {
+    const color = colorProp.color;
 
-    btns.push(
-      createModalActionBtn(pickingColor, "faceColor", "8500", true, true)
-    );
-    btns.push(
-      createModalActionBtn(pickingColor, "faceColor", "8500", true, false)
-    );
-  } else {
-    pickingColor = findSimilarColor(
-      props.faceColor.color,
-      props.palettes.palette641
-    );
-
-    btns.push(createModalActionBtn(pickingColor, "faceColor", "641", false));
+    if (color.rgb && isDualColor(color)) {
+      btns.push(createModalActionBtn(color, "faceColor", "8500", true, true));
+      btns.push(createModalActionBtn(color, "faceColor", "8500", true, false));
+    } else {
+      btns.push(createModalActionBtn(color, "faceColor", "641", false));
+    }
   }
 
-  if (props.sideLight.isOn) {
-    pickingColor = findSimilarColor(
-      props.sideColor.color,
-      props.palettes.palette8500
-    );
-    btns.push(
-      createModalActionBtn(pickingColor, "sideColor", "8500", true, true)
-    );
-    btns.push(
-      createModalActionBtn(pickingColor, "sideColor", "8500", true, false)
-    );
-  } else {
-    pickingColor = findSimilarColor(
-      props.sideColor.color,
-      props.palettes.palette641
-    );
-    console.log(pickingColor);
-    btns.push(createModalActionBtn(pickingColor, "sideColor", "641", false));
-  }
+  // Поиск похожего цвета в другой палитре, зависящее от засветки
+  // if (props.sideLight.isOn) {
+  //   pickingColor = findSimilarColor(
+  //     props.sideColor.color,
+  //     props.palettes.palette8500
+  //   );
+  //   btns.push(
+  //     createModalActionBtn(pickingColor, "sideColor", "8500", true, true)
+  //   );
+  //   btns.push(
+  //     createModalActionBtn(pickingColor, "sideColor", "8500", true, false)
+  //   );
+  // } else {
+  //   pickingColor = findSimilarColor(
+  //     props.sideColor.color,
+  //     props.palettes.palette641
+  //   );
+  //   console.log(pickingColor);
+  //   btns.push(createModalActionBtn(pickingColor, "sideColor", "641", false));
+  // }
 
   document.getElementsByClassName("modal-actions")[0].append(...btns);
 }

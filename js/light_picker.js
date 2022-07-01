@@ -50,7 +50,11 @@ export default function (props, choosingPropName = "faceLight") {
       choosingProp.color = color;
       choosingProp.isOn = true;
 
-      if (choosingPropName != "backLight" && color.id) {
+      if (
+        choosingPropName != "backLight" &&
+        props.faceLight.id &&
+        props.sideLight.id
+      ) {
         props["faceLight"].id = color.id;
         props["faceLight"].color = color;
 
@@ -66,10 +70,9 @@ export default function (props, choosingPropName = "faceLight") {
               choosingPropName.replace("Light", "Color"),
               "641",
             ]),
-          () => {
-            switchWindow("main");
-            body.classList.add("modal-active");
-          },
+          // () => {
+          //   body.classList.add("modal-active");
+          // },
         ]);
       }
 

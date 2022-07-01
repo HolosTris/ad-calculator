@@ -332,6 +332,7 @@ body.modal-active .modal {
   font-size: 17px;
   color: #7c787d;
   text-align: center;
+  cursor: auto;
 }
 .pick-color .name {
   font-weight: 700;

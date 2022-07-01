@@ -1,20 +1,19 @@
 import { switchWindow } from "./script.js";
 import initPreview from "./preview.js";
 import initPropButtons from "./main_components/prop_buttons.js";
-import initModal from "./main_components/modal.js";
-import { getHex, getNameFont, isBright, stylizeTextElem } from "./utils.js";
+// import initModal from "./main_components/modal.js";
+// import { getHex, getNameFont, isBright, stylizeTextElem } from "./utils.js";
 import initHeader from "./header.js";
 import initInputs from "./main_components/inputs.js";
 
 const body = document.body;
 
-function initMain(props, isModalOn = false) {
+function initMain(props) {
   const objectSvg = document.getElementById("letter");
 
   initHeader();
   initInputs(props);
   initPropButtons(props);
-  initModal(props);
   initPreview(objectSvg, props);
   initActionButtons(props);
   props.isWelcomed ? null : initWelcome(props);

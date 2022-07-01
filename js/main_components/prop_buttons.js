@@ -1,4 +1,4 @@
-import { showModalActionBtns } from "./modal.js";
+// import { showModalActionBtns } from "../picker_components/modal.js";
 import { changeLetterColor, toggleLight } from "../preview.js";
 import {
   findSimilarColor,
