@@ -1,9 +1,9 @@
 import initHeader from "./header.js";
 import initPreview from "./preview.js";
-import { initColors, initFont } from "./script.js";
+import { initColors, initFont, switchWindow } from "./script.js";
 import { getNameFont, stylizeTextElem } from "./utils.js";
 
-function initBasket() {
+function initBasket(props) {
   initHeader();
 
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -104,14 +104,28 @@ function initBasket() {
 
     initPreview(objSvg, order);
 
-    // order.onclick = (ev) => {
-    //   curFont.id = font.id;
-    //   curFont.isItalic = isItalic;
-
-    //   switchWindow("main");
-    // };
+    orderElem.onclick = () => {
+      pickOrder(order);
+      switchWindow("main");
+    };
 
     return orderElem;
+  }
+
+  function pickOrder(order) {
+    props.textSign = order.text;
+    props.font = order.font;
+    props.signHeight = order.height;
+    props.signWidth = order.width;
+    props.textHeight = order.textHeight;
+    props.mountHeight = order.mountHeight;
+    props.faceColor = order.faceColor;
+    props.faceLight = order.faceLight;
+    props.sideColor = order.sideColor;
+    props.sideLight = order.sideLight;
+    props.backLight = order.backLight;
+    props.isHighBrightness = order.isHighBrightness;
+    props.filmType = order.filmType;
   }
 }
 

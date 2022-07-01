@@ -5,6 +5,7 @@ import initPropButtons from "./main_components/prop_buttons.js";
 // import { getHex, getNameFont, isBright, stylizeTextElem } from "./utils.js";
 import initHeader from "./header.js";
 import initInputs from "./main_components/inputs.js";
+import { validate } from "./utils.js";
 
 const body = document.body;
 
@@ -129,12 +130,29 @@ function addToBasket(props) {
   });
   const newOrder = JSON.parse(jsonSign);
 
+  // Простая валидация
+  if (!validateOrder(newOrder)) {
+    const thisBtn = document.getElementsByName("addToBasket")[0];
+
+    thisBtn.style.borderColor = "red";
+    setTimeout(() => (thisBtn.style.borderColor = null), 3000);
+
+    return;
+  }
+
   if (!isAlreadyHad) orders.push(newOrder);
 
   const jsonOrders = JSON.stringify(orders);
 
   localStorage.setItem("orders", jsonOrders);
   console.log(localStorage.getItem("orders"));
+}
+
+function validateOrder(order) {
+  console.log(order);
+  for (let propName in order) {
+    if (order[propName] === null || order[propName] === "") return false;
+  }
 }
 
 export default initMain;
